@@ -1,38 +1,196 @@
-.App {
-  text-align: center;
+.headerStyle {
+  padding: 1rem;
+  background-color: #f89e2b;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header {
+  background-color: #f89e2b;
+  color: #fff;
+  padding: 10px 50px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(248, 158, 43, 0.9) !important;
+}
+
+.logo img {
+  max-height: 70px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-left: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+.main_wrapper {
+  padding: 50px 0px 0 0px;
+}
+.items_title {
+  padding-bottom: 16px;
+  font-family: Ubuntu;
+}
+.item_title {
+  font-family: Roboto;
+}
+
+.summary_title {
+  font-family: Ubuntu;
+}
+.card-title {
+  margin: 0;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 130px;
+}
+
+.card {
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.summary {
+  height: 600px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+}
+.card_item {
+  position: relative;
+  border: none !important;
+  border-radius: 25px !important;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 10px rgba(248, 158, 43, 0.4) !important; /* Adjust shadow as needed */
+}
+.list_title {
+  font-family: Roboto;
+}
+.card-img-top {
+  border-radius: 25px !important;
+}
+.item {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.item:hover {
+  background-color: #f8f9fa !;
+}
+
+.total-placeholder {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.total-placeholder:not(.visible) {
+  display: none;
+}
+.selected_item_list {
+  height: 460px;
+}
+.total_container {
+  align-content: center;
+}
+.total {
+  font-size: large;
+  font-family: Roboto;
+}
+
+.place-order-btn {
+  float: right;
+  align-items: center;
+  appearance: none;
+  background-color: #f89e2b;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #f89e2b 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395a;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'JetBrains Mono', monospace;
+  height: 48px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
 }
 
-.App-link {
-  color: #61dafb;
+.place-order-btn:focus {
+  box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+}
+.place-order-btn:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #f89e2b 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+.place-order-btn:active {
+  box-shadow: #d6d6e7 0 3px 7px inset;
+  transform: translateY(2px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+/* Order page  */
+.card_order {
+  border-radius: 25px !important;
+}
+.item_container {
+  height: 140px;
+}
+.order_title {
+  font-family: Ubuntu;
+}
+.order_number {
+  font-family: Josefin Sans;
+}
+.order_itemList {
+  font-family: Roboto;
+}
+/* Media Query */
+
+@media only screen and (max-width: 991px) {
+  .item_title {
+    padding-top: 40px;
   }
 }
