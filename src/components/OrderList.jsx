@@ -9,8 +9,7 @@ function OrderList() {
       const response = await axios.get(
         'https://nice-rose-squid-sock.cyclic.app/api/orders'
       );
-      console.log(response.data);
-      // setOrderItems(response.data);
+      setOrderItems(response.data);
     } catch (error) {
       console.error('Error fetching order items:', error);
     }
@@ -19,6 +18,7 @@ function OrderList() {
   useEffect(() => {
     getItemsFromDataBase();
   }, []);
+
   return (
     <div className="container vh-100">
       <h1 className="text-center mt-4 mb-5 order_title">Orders List</h1>
@@ -31,7 +31,7 @@ function OrderList() {
               }`}</div>
               <div className="card-body">
                 <div className="item_container">
-                  {order.items.map((item, itemIndex) => (
+                  {order.orders.map((item, itemIndex) => (
                     <div key={item._id}>
                       <h5 className="card-text order_itemList">
                         {item.name} - {item.quantity}
