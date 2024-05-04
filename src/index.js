@@ -9,6 +9,7 @@ import NotFound from './components/NotFound';
 import ShopContainer from './components/ShopContainer';
 import OrderPlaceCard from './components/OrderPlaceCard';
 import POSContextWrapper from './contexts/PosContext';
+import OrderList from './components/OrderList';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: 'orders',
         Component: OrderPlaceCard,
+      },
+      {
+        path: 'orderList',
+        Component: OrderList,
       },
     ],
   },
