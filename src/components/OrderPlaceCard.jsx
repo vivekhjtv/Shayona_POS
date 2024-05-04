@@ -6,7 +6,7 @@ function OrderPlaceCard() {
 
   const getItemsFromDataBase = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/items');
+      const response = await axios.get('https://nice-rose-squid-sock.cyclic.app/api/items');
       setOrderItems(response.data);
     } catch (error) {
       console.error('Error fetching order items:', error);
@@ -19,12 +19,12 @@ function OrderPlaceCard() {
 
   const handleDone = async (order) => {
     try {
-      await axios.post(`http://localhost:8000/api/orders`, {
+      await axios.post(`https://nice-rose-squid-sock.cyclic.app/api/orders`, {
         orders: order.items,
       });
 
       const itemId = order._id;
-      await axios.delete(`http://localhost:8000/api/items/${itemId}`);
+      await axios.delete(`https://nice-rose-squid-sock.cyclic.app/api/items/${itemId}`);
 
       // After deletion, fetch the updated data
       getItemsFromDataBase();

@@ -22,7 +22,7 @@ const POSContextWrapper = ({ children }) => {
   const handlePlaceOrder = async () => {
     const postSelectedItemsToDataBase = async (selectedItems) => {
       try {
-        await axios.post(`http://localhost:8000/api/items/`, {
+        await axios.post(`https://nice-rose-squid-sock.cyclic.app/api/items/`, {
           items: selectedItems,
         });
         // console.log('Items added successfully');
