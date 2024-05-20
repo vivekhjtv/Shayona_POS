@@ -20,16 +20,28 @@ const POSContextWrapper = ({ children }) => {
     }
   };
   const handlePlaceOrder = async () => {
-    const postSelectedItemsToDataBase = async (selectedItems) => {
+    if (selectedItems.length === 0) {
+      return; // If no items are selected, return without making the API call
+    }
+    const currentDateTime = new Date();
+    const options = { timeZone: 'America/Toronto', hour12: true };
+
+    const easternDate = currentDateTime.toLocaleDateString('en-CA', options);
+    const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
+
+    const postSelectedItemsToDataBase = async (items) => {
       try {
         await axios.post(`https://nice-rose-squid-sock.cyclic.app/api/items/`, {
-          items: selectedItems,
+          // await axios.post(`http://localhost:8000/api/items`, {
+          items: items,
+          date: easternDate,
+          time: easternTime,
         });
-        // console.log('Items added successfully');
       } catch (error) {
         console.error('Error adding items:', error);
       }
     };
+
     await postSelectedItemsToDataBase(selectedItems);
     setSelectedItems([]);
   };

@@ -175,6 +175,9 @@ nav ul li a {
 .card_order {
   border-radius: 25px !important;
 }
+.card-header:first-child {
+  border-radius: 25px 25px 0 0 !important;
+}
 .item_container {
   height: 140px;
 }
