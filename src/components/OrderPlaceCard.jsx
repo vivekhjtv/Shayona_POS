@@ -8,7 +8,7 @@ function OrderPlaceCard() {
     try {
       const response = await axios.get(
         // 'http://localhost:8000/api/items'
-        'https://nice-rose-squid-sock.cyclic.app/api/items'
+        `https://shayona-orders.vercel.app/api/items`
       );
       setOrderItems(response.data);
     } catch (error) {
@@ -27,7 +27,7 @@ function OrderPlaceCard() {
   const handleDone = async (order) => {
     try {
       // await axios.post(`http://localhost:8000/api/orders`, {
-      await axios.post(`https://nice-rose-squid-sock.cyclic.app/api/orders`, {
+      await axios.post(`https://shayona-orders.vercel.app/api/orders`, {
         orders: order.items,
         date: order.date,
         time: order.time,
@@ -36,7 +36,7 @@ function OrderPlaceCard() {
       const itemId = order._id;
       await axios.delete(
         // `http://localhost:8000/api/items/${itemId}`
-        `https://nice-rose-squid-sock.cyclic.app/api/items/${itemId}`
+        `https://shayona-orders.vercel.app/api/items/${itemId}`
       );
       // After deletion, fetch the updated data
       getItemsFromDataBase();

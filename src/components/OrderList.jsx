@@ -7,7 +7,7 @@ function OrderList() {
   const getItemsFromDataBase = async () => {
     try {
       const response = await axios.get(
-        'https://nice-rose-squid-sock.cyclic.app/api/orders'
+        'https://shayona-orders.vercel.app/api/orders'
         // 'http://localhost:8000/api/orders'
       );
       setOrderItems(response.data);
