@@ -1,33 +1,61 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 function OrderPlaceCard() {
   const [orderItems, setOrderItems] = useState([]);
+  const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
+  const prevOrderItems = useRef([]);
+  const notificationSound = useRef(new Audio('alert.mp3'));
 
   const getItemsFromDataBase = async () => {
     try {
       const response = await axios.get(
-        // 'http://localhost:8000/api/items'
-        `https://shayona-orders.vercel.app/api/items`
+        'http://localhost:8000/api/items'
+        // `https://shayona-orders.vercel.app/api/items`
       );
       setOrderItems(response.data);
     } catch (error) {
       console.error('Error fetching order items:', error);
     }
   };
-  useEffect(() => {
-    // Call the function initially
+
+  const enableNotifications = () => {
     getItemsFromDataBase();
-    // Set up interval to call the function every 5 seconds
+    notificationSound.current
+      .play()
+      .then(() => {
+        notificationSound.current.pause();
+        notificationSound.current.currentTime = 0;
+        setIsNotificationEnabled(true);
+      })
+      .catch((error) => {
+        console.error('Error enabling notification sound:', error);
+      });
+  };
+
+  useEffect(() => {
+    getItemsFromDataBase();
     const intervalId = setInterval(getItemsFromDataBase, 5000);
-    // Clean up function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    if (
+      prevOrderItems.current.length &&
+      JSON.stringify(prevOrderItems.current) !== JSON.stringify(orderItems)
+    ) {
+      if (isNotificationEnabled) {
+        notificationSound.current.play().catch((error) => {
+          console.error('Error playing notification sound:', error);
+        });
+      }
+    }
+    prevOrderItems.current = orderItems;
+  }, [orderItems, isNotificationEnabled]);
+
   const handleDone = async (order) => {
     try {
-      // await axios.post(`http://localhost:8000/api/orders`, {
-      await axios.post(`https://shayona-orders.vercel.app/api/orders`, {
+      await axios.post(`http://localhost:8000/api/orders`, {
         orders: order.items,
         date: order.date,
         time: order.time,
@@ -35,10 +63,9 @@ function OrderPlaceCard() {
 
       const itemId = order._id;
       await axios.delete(
-        // `http://localhost:8000/api/items/${itemId}`
-        `https://shayona-orders.vercel.app/api/items/${itemId}`
+        `http://localhost:8000/api/items/${itemId}`
+        // `https://shayona-orders.vercel.app/api/items/${itemId}`
       );
-      // After deletion, fetch the updated data
       getItemsFromDataBase();
     } catch (error) {
       console.error('Error:', error);
@@ -48,6 +75,13 @@ function OrderPlaceCard() {
   return (
     <div className="container vh-100">
       <h1 className="text-center mt-4 mb-5 order_title">Orders</h1>
+      {!isNotificationEnabled && (
+        <div className="text-center mb-4">
+          <button className="btn btn-primary" onClick={enableNotifications}>
+            Enable Notifications
+          </button>
+        </div>
+      )}
       <div className="row row-cols-1 row-cols-md-3">
         {orderItems.map((order, index) => (
           <div className="col mb-4" key={order._id}>
@@ -56,11 +90,9 @@ function OrderPlaceCard() {
                 <div className="order_number">{`OrderNumber #00${
                   index + 1
                 }`}</div>
-                {
-                  <div key={order._id}>
-                    <div className="order_datetime">{`${order.time} - ${order.date} `}</div>
-                  </div>
-                }
+                <div key={order._id}>
+                  <div className="order_datetime">{`${order.time} - ${order.date} `}</div>
+                </div>
               </div>
               <div className="card-body">
                 <div className="item_container">

@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       {
-        path: 'shop',
+        path: '/',
         Component: ShopContainer,
       },
       {

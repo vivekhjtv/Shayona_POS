@@ -1,87 +1,53 @@
 import React from 'react';
 import { usePOSContext } from '../contexts/PosContext';
-// import { Link } from 'react-router-dom';
 
 function RightItemsList() {
   const { addItemToLeftList } = usePOSContext();
+
+  const items = [
+    // { name: 'Samosa', price: 3.5, imgSrc: 'samosa.png', alt: 'Samosa' },
+    // { name: 'Dabeli', price: 3.5, imgSrc: 'dabeli.jpg', alt: 'Dabeli' },
+    // { name: 'Puff', price: 4.0, imgSrc: 'veg-puff.jpg', alt: 'Puff' },
+    { name: 'Khichadi', price: 5.0, imgSrc: 'khichadi.jpeg', alt: 'Khichadi' },
+    {
+      name: 'Pav Bhaji',
+      price: 6.0,
+      imgSrc: 'pav_bhaji.jpeg',
+      alt: 'Pav Bhaji',
+    },
+    { name: 'Papdi lot', price: 3.0, imgSrc: 'Khichu-3.jpg', alt: 'Papdi lot' },
+    {
+      name: 'Cheese Pizza',
+      price: 6.0,
+      imgSrc: 'cheese_pizza.jpeg',
+      alt: 'Cheese Pizza',
+    },
+    {
+      name: 'Veg Pizza',
+      price: 7.0,
+      imgSrc: 'veg_pizza.webp',
+      alt: 'Veg Pizza',
+    },
+  ];
+
   return (
     <div className="item-selection">
       <h2 className="items_title">Available Items</h2>
-      {/* <Link to="/orders" type="button" className="btn btn-danger me-2">
-        Cart
-      </Link> */}
-      <div className="row">
-        <div className="col-md-4">
-          <div
-            className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Samosa', 3.5)}
-          >
-            <img src="samosa.png" className="card-img-top" alt="Samosa" />
-            <div className="card-body">
-              <h5 className="card-title item_title">Samosa - $3.50</h5>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div
-            className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Dabeli', 3.5)}
-          >
-            <img src="dabeli.jpg" className="card-img-top" alt="Dabeli" />
-            <div className="card-body">
-              <h5 className="card-title item_title">Dabeli - $3.50</h5>
-            </div>
-          </div>
-        </div>
 
-        <div className="col-md-4">
-          <div
-            className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Puff', 4.0)}
-          >
-            <img src="veg-puff.jpg" className="card-img-top" alt="Puff" />
-            <div className="card-body">
-              <h5 className="card-title item_title">Puff - $4.00</h5>
+      <div className="row">
+        {items.map((item, index) => (
+          <div className="col-md-4" key={index}>
+            <div
+              className="card card_item mb-3"
+              onClick={() => addItemToLeftList(item.name, item.price)}
+            >
+              <img src={item.imgSrc} className="card-img-top" alt={item.alt} />
+              <div className="card-body">
+                <h5 className="card-title item_title">{item.name}</h5>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-md-4">
-          <div
-            className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Khichadi', 5.0)}
-          >
-            <img src="khichadi.jpeg" className="card-img-top" alt="Khichadi" />
-            <div className="card-body">
-              <h5 className="card-title item_title">Khichadi - $5.00</h5>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div
-            className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Pav Bhaji', 6.0)}
-          >
-            <img
-              src="pav_bhaji.jpeg"
-              className="card-img-top"
-              alt="Pav Bhaji"
-            />
-            <div className="card-body">
-              <h5 className="card-title item_title">Pav Bhaji - $6.00</h5>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div
-            className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Papdi lot', 3.0)}
-          >
-            <img src="Khichu-3.jpg" className="card-img-top" alt="Papdi lot" />
-            <div className="card-body">
-              <h5 className="card-title item_title">Papdi lot - $3.00</h5>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

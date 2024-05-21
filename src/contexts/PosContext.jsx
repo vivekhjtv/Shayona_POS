@@ -31,8 +31,8 @@ const POSContextWrapper = ({ children }) => {
 
     const postSelectedItemsToDataBase = async (items) => {
       try {
-        await axios.post(`https://shayona-orders.vercel.app/api/items`, {
-          // await axios.post(`http://localhost:8000/api/items`, {
+        // await axios.post(`https://shayona-orders.vercel.app/api/items`, {
+        await axios.post(`http://localhost:8000/api/items`, {
           items: items,
           date: easternDate,
           time: easternTime,
