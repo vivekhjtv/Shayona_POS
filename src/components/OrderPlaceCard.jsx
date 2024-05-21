@@ -10,8 +10,8 @@ function OrderPlaceCard() {
   const getItemsFromDataBase = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:8000/api/items'
-        // `https://shayona-orders.vercel.app/api/items`
+        // 'http://localhost:8000/api/items'
+        `https://shayona-orders.vercel.app/api/items`
       );
       setOrderItems(response.data);
     } catch (error) {
@@ -55,16 +55,20 @@ function OrderPlaceCard() {
 
   const handleDone = async (order) => {
     try {
-      await axios.post(`http://localhost:8000/api/orders`, {
-        orders: order.items,
-        date: order.date,
-        time: order.time,
-      });
+      await axios.post(
+        'https://shayona-orders.vercel.app/api/orders',
+        // `http://localhost:8000/api/orders`
+        {
+          orders: order.items,
+          date: order.date,
+          time: order.time,
+        }
+      );
 
       const itemId = order._id;
       await axios.delete(
-        `http://localhost:8000/api/items/${itemId}`
-        // `https://shayona-orders.vercel.app/api/items/${itemId}`
+        // `http://localhost:8000/api/items/${itemId}`
+        `https://shayona-orders.vercel.app/api/items/${itemId}`
       );
       getItemsFromDataBase();
     } catch (error) {
