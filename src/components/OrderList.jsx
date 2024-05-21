@@ -124,22 +124,30 @@ function OrderList() {
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map((order, index) => (
-              <tr key={order._id}>
-                <td className="col-sm-3">{`OrderNumber #00${index + 1}`}</td>
-                <td className="col-sm-3">{order.date}</td>
-                <td className="col-sm-3">{order.time}</td>
-                <td className="col-sm-3">
-                  <ul className="orderListItem">
-                    {order.orders.map((item, itemIndex) => (
-                      <li
-                        key={item._id}
-                      >{`${item.name} - ${item.quantity}`}</li>
-                    ))}
-                  </ul>
+            {filteredItems.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center">
+                  No items found
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredItems.map((order, index) => (
+                <tr key={order._id}>
+                  <td className="col-sm-3">{`OrderNumber #00${index + 1}`}</td>
+                  <td className="col-sm-3">{order.date}</td>
+                  <td className="col-sm-3">{order.time}</td>
+                  <td className="col-sm-3">
+                    <ul className="orderListItem">
+                      {order.orders.map((item, itemIndex) => (
+                        <li
+                          key={item._id}
+                        >{`${item.name} - ${item.quantity}`}</li>
+                      ))}
+                    </ul>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
