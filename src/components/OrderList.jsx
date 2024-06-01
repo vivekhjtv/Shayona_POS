@@ -21,8 +21,8 @@ function OrderList() {
   const getItemsFromDataBase = async () => {
     try {
       const response = await axios.get(
-        // 'http://localhost:8000/api/orders'
-        'https://shayona-orders.vercel.app/api/orders'
+        'http://localhost:8000/api/orders'
+        // 'https://shayona-orders.vercel.app/api/orders'
       );
       setOrderItems(response.data);
       setFilteredItems(response.data);
@@ -118,6 +118,7 @@ function OrderList() {
           <thead className="table-dark">
             <tr>
               <th>Order Number</th>
+              <th>Customer Name</th>
               <th>Date</th>
               <th>Time</th>
               <th>Items</th>
@@ -133,10 +134,11 @@ function OrderList() {
             ) : (
               filteredItems.map((order, index) => (
                 <tr key={order._id}>
-                  <td className="col-sm-3">{`OrderNumber #00${index + 1}`}</td>
-                  <td className="col-sm-3">{order.date}</td>
-                  <td className="col-sm-3">{order.time}</td>
-                  <td className="col-sm-3">
+                  <td className="col-sm-2">{`OrderNumber #00${index + 1}`}</td>
+                  <td className="col-sm-2">{order.customerName}</td>
+                  <td className="col-sm-2">{order.date}</td>
+                  <td className="col-sm-2">{order.time}</td>
+                  <td className="col-sm-2">
                     <ul className="orderListItem">
                       {order.orders.map((item, itemIndex) => (
                         <li

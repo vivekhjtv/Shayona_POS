@@ -4,6 +4,7 @@ const POSContext = createContext({});
 
 const POSContextWrapper = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [customerName, setCustomerName] = useState('');
 
   const addItemToLeftList = (itemName, price) => {
     const existingItem = selectedItems.find((item) => item.name === itemName);
@@ -19,9 +20,16 @@ const POSContextWrapper = ({ children }) => {
       ]);
     }
   };
-  const handlePlaceOrder = async () => {
+
+  const handlePlaceOrder = async (name) => {
     if (selectedItems.length === 0) {
-      return; // If no items are selected, return without making the API call
+      alert('Please Select Items');
+      return;
+    }
+
+    if (!name) {
+      alert('Please Enter Customer Name');
+      return;
     }
     const currentDateTime = new Date();
     const options = { timeZone: 'America/Toronto', hour12: true };
@@ -31,9 +39,9 @@ const POSContextWrapper = ({ children }) => {
 
     const postSelectedItemsToDataBase = async (items) => {
       try {
-        await axios.post(`https://shayona-orders.vercel.app/api/items`, {
-          // await axios.post(`http://localhost:8000/api/items`, {
+        await axios.post(`http://localhost:8000/api/items`, {
           items: items,
+          customerName: name,
           date: easternDate,
           time: easternTime,
         });
@@ -44,6 +52,7 @@ const POSContextWrapper = ({ children }) => {
 
     await postSelectedItemsToDataBase(selectedItems);
     setSelectedItems([]);
+    setCustomerName('');
   };
 
   const contextValue = {
@@ -51,6 +60,8 @@ const POSContextWrapper = ({ children }) => {
     selectedItems,
     setSelectedItems,
     handlePlaceOrder,
+    customerName,
+    setCustomerName,
   };
 
   return (

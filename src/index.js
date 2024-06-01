@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import ShopContainer from './components/ShopContainer';
 import OrderPlaceCard from './components/OrderPlaceCard';
 import POSContextWrapper from './contexts/PosContext';
 import OrderList from './components/OrderList';
+import StockInfoTable from './components/StockInfoTable';
+import MandirOrder from './components/Mandir/MandirOrder';
 
 const router = createBrowserRouter([
   {
@@ -28,8 +31,17 @@ const router = createBrowserRouter([
         path: 'orderList',
         Component: OrderList,
       },
+      {
+        path: 'stock',
+        Component: StockInfoTable,
+      },
+      {
+        path: 'mandir',
+        Component: MandirOrder,
+      },
     ],
   },
+
   {
     path: '*',
     Component: NotFound,

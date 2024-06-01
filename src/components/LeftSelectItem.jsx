@@ -1,25 +1,45 @@
 import React from 'react';
 import { usePOSContext } from '../contexts/PosContext';
+
 function LeftSelectItem() {
-  const { selectedItems, setSelectedItems, handlePlaceOrder } = usePOSContext();
+  const {
+    selectedItems,
+    // setSelectedItems,
+    handlePlaceOrder,
+    customerName,
+    setCustomerName,
+  } = usePOSContext();
 
-  const incrementQuantity = (itemName) => {
-    setSelectedItems((prevItems) =>
-      prevItems.map((item) =>
-        item.name === itemName ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  const handleChange = (e) => {
+    // Get the current value
+    const name = e.target.value;
+
+    // Capitalize the first letter using charAt and toUpperCase
+    const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+
+    // Update the customerName state with the capitalized name
+    setCustomerName(capitalizedName);
   };
 
-  const decrementQuantity = (itemName) => {
-    setSelectedItems((prevItems) =>
-      prevItems.map((item) =>
-        item.name === itemName && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
+  // const incrementQuantity = (itemName) => {
+  //   setSelectedItems((prevItems) =>
+  //     prevItems.map((item) =>
+  //       item.name === itemName ? { ...item, quantity: item.quantity + 1 } : item
+  //     )
+  //   );
+  // };
+
+  // const decrementQuantity = (itemName) => {
+  //   setSelectedItems((prevItems) =>
+  //     prevItems
+  //       .map((item) =>
+  //         item.name === itemName && item.quantity > 0
+  //           ? { ...item, quantity: item.quantity - 1 }
+  //           : item
+  //       )
+  //       .filter((item) => item.quantity > 0)
+  //   );
+  // };
 
   const total = selectedItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -31,7 +51,15 @@ function LeftSelectItem() {
       <div className="row">
         <h2 className="summary_title">Selected Items</h2>
       </div>
-
+      <div className="col-sm-6 mb-1">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter Customer Name"
+          value={customerName}
+          onChange={handleChange}
+        />
+      </div>
       <div className="selected_item_list">
         <ul className="selected-items-placeholder list-group mb-2">
           <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -51,7 +79,6 @@ function LeftSelectItem() {
               </span>
             </div>
           </li>
-          {/* Iterate over selected items and display them */}
           {selectedItems?.map((item, index) => (
             <li
               key={index}
@@ -61,23 +88,23 @@ function LeftSelectItem() {
                 <span className="item-name list_title">{item.name}</span>
               </div>
               <div className="col-md-4 text-right ">
-                <button
+                {/* <button
                   className="btn btn-primary px-3 list_title"
                   onClick={() => decrementQuantity(item.name)}
                   type="button"
                 >
                   -
-                </button>
+                </button> */}
                 <span className="quantity list_title mx-3">
                   {item.quantity}
                 </span>
-                <button
+                {/* <button
                   className="btn btn-primary px-3 list_title"
                   onClick={() => incrementQuantity(item.name)}
                   type="button"
                 >
                   +
-                </button>
+                </button> */}
               </div>
               <div className="col-md-3">
                 <span className="item-name list_title">{item.price}</span>
@@ -96,7 +123,7 @@ function LeftSelectItem() {
           <button
             id="place-order-btn"
             className="place-order-btn"
-            onClick={handlePlaceOrder}
+            onClick={() => handlePlaceOrder(customerName)}
           >
             Place Order
           </button>
