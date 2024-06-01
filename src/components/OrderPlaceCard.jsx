@@ -9,7 +9,10 @@ function OrderPlaceCard() {
 
   const getItemsFromDataBase = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/items');
+      // const response = await axios.get('http://localhost:8000/api/items');
+      const response = await axios.get(
+        'https://shayona-orders.vercel.app/api/items'
+      );
       return response.data;
     } catch (error) {
       console.error('Error fetching order items:', error);
@@ -19,7 +22,10 @@ function OrderPlaceCard() {
 
   const getStoreOrdersFromDataBase = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/store-order');
+      // const response = await axios.get('http://localhost:8000/api/store-order');
+      const response = await axios.get(
+        'https://shayona-orders.vercel.app/api/store-order'
+      );
       return response.data;
     } catch (error) {
       console.error('Error fetching store orders:', error);
@@ -92,7 +98,8 @@ function OrderPlaceCard() {
 
       if (isStoreOrder) {
         // Store order logic
-        await axios.post('http://localhost:8000/api/store', {
+        // await axios.post('http://localhost:8000/api/store', {
+        await axios.post('https://shayona-orders.vercel.app/api/store', {
           orders: order.items,
           customerName: order.customerName,
           date: order.date,
@@ -101,10 +108,14 @@ function OrderPlaceCard() {
 
         // Delete the store order from the store-order table
         const itemId = order._id;
-        await axios.delete(`http://localhost:8000/api/store-order/${itemId}`);
+        // await axios.delete(`http://localhost:8000/api/store-order/${itemId}`);
+        await axios.delete(
+          `https://shayona-orders.vercel.app/api/store-order/${itemId}`
+        );
       } else {
         // Regular item logic
-        await axios.post('http://localhost:8000/api/orders', {
+        // await axios.post('http://localhost:8000/api/orders', {
+        await axios.post('https://shayona-orders.vercel.app/api/orders', {
           orders: order.items,
           customerName: order.customerName,
           date: order.date,
@@ -113,7 +124,10 @@ function OrderPlaceCard() {
 
         // Delete the order from the items table
         const itemId = order._id;
-        await axios.delete(`http://localhost:8000/api/items/${itemId}`);
+        // await axios.delete(`http://localhost:8000/api/items/${itemId}`);
+        await axios.delete(
+          `https://shayona-orders.vercel.app/api/items/${itemId}`
+        );
       }
 
       fetchAllOrders();
@@ -128,9 +142,12 @@ function OrderPlaceCard() {
         order.customerName === 'mandir' || order.customerName === 'store';
 
       const itemId = order._id;
+      // const deleteUrl = isStoreOrder
+      //   ? `http://localhost:8000/api/store-order/${itemId}`
+      //   : `http://localhost:8000/api/items/${itemId}`;
       const deleteUrl = isStoreOrder
-        ? `http://localhost:8000/api/store-order/${itemId}`
-        : `http://localhost:8000/api/items/${itemId}`;
+        ? `https://shayona-orders.vercel.app/api/store-order/${itemId}`
+        : `https://shayona-orders.vercel.app/api/items/${itemId}`;
 
       await axios.delete(deleteUrl);
       fetchAllOrders();

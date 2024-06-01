@@ -8,7 +8,10 @@ function StockInfoTable() {
     // Fetch stock data from the API
     const fetchStockData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/stock');
+        // const response = await axios.get('http://localhost:8000/api/stock');
+        const response = await axios.get(
+          'https://shayona-orders.vercel.app/api/stock'
+        );
         setStockData(response.data);
       } catch (error) {
         console.error('Error fetching stock data:', error);
@@ -20,7 +23,10 @@ function StockInfoTable() {
 
   const handleDeleteClick = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/stock/${itemId}`);
+      // await axios.delete(`http://localhost:8000/api/stock/${itemId}`);
+      await axios.delete(
+        `https://shayona-orders.vercel.app/api/stock/${itemId}`
+      );
       setStockData(stockData.filter((item) => item._id !== itemId));
     } catch (error) {
       console.error('Error deleting stock data:', error);
