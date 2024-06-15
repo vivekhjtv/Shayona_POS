@@ -130,7 +130,7 @@ function MandirBulkOrder() {
                         onChange={(e) => handleChange(e, item.name)}
                       >
                         <option value="0">Select</option>
-                        <option value="1 Tray">0 Tray</option>
+                        <option value="0 Tray">0 Tray</option>
                         <option value="1 Tray">1 Tray</option>
                         <option value="2 Tray">2 Tray</option>
                         <option value="3 Tray">3 Tray</option>
