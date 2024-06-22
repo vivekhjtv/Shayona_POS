@@ -203,6 +203,9 @@ nav ul li a {
 /* .card_wrapper {
   margin-bottom: 12px !;
 } */
+.card-body {
+  padding: 12px !important;
+}
 .card_style {
   padding-top: 6px !important;
   padding-bottom: 10px !important;

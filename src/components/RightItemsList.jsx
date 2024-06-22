@@ -63,7 +63,7 @@ function RightItemsList() {
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('khichadi', 5.0, itemCount?.khichadi)
+              handleItemClick('Khichadi', 5.0, itemCount?.khichadi)
             }
           >
             <img src="khichadi.jpeg" className="card-img-top" alt="Khichadi" />
@@ -78,7 +78,7 @@ function RightItemsList() {
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('pav_bhaji', 6.0, itemCount?.pav_bhaji)
+              handleItemClick('Pav Bhaji', 6.0, itemCount?.pav_bhaji)
             }
           >
             <img
@@ -96,7 +96,7 @@ function RightItemsList() {
         <div className="col-md-4">
           <div
             className="card card_item mb-3"
-            onClick={() => handleItemClick('lot', 3.0, itemCount?.lot)}
+            onClick={() => handleItemClick('Lot', 3.0, itemCount?.lot)}
           >
             <img src="Khichu-3.jpg" className="card-img-top" alt="Papdi lot" />
             <div className="card-body">
@@ -110,7 +110,7 @@ function RightItemsList() {
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('cheese_pizza', 6.0, itemCount?.cheese_pizza)
+              handleItemClick('Cheese Pizza', 6.0, itemCount?.cheese_pizza)
             }
           >
             <img
@@ -129,7 +129,7 @@ function RightItemsList() {
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('veg_pizza', 7.0, itemCount?.veg_pizza)
+              handleItemClick('Veg Pizza', 7.0, itemCount?.veg_pizza)
             }
           >
             <img
@@ -162,7 +162,9 @@ function RightItemsList() {
         <div className="col-md-4">
           <div
             className="card card_item mb-3"
-            onClick={() => handleItemClick('thali', 10.0, itemCount?.thali)}
+            onClick={() =>
+              handleItemClick('Thali Special', 10.0, itemCount?.thali)
+            }
           >
             <img
               src="thali.jpeg"

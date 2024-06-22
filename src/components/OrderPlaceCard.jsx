@@ -92,12 +92,14 @@ function OrderPlaceCard() {
 
   const handleDone = async (order) => {
     try {
+      console.log(order);
       // Determine if the order is a regular item or store order
       const isStoreOrder =
-        order.customerName === 'mandir' || order.customerName === 'store';
-
+        order.customerName === 'Mandir' || order.customerName === 'Store';
+      console.log(isStoreOrder);
       if (isStoreOrder) {
         // Store order logic
+        console.log(isStoreOrder);
         // await axios.post('http://localhost:8000/api/store', {
         await axios.post('https://shayona-orders.vercel.app/api/store', {
           orders: order.items,
@@ -139,7 +141,7 @@ function OrderPlaceCard() {
   const cancelOrder = async (order) => {
     try {
       const isStoreOrder =
-        order.customerName === 'mandir' || order.customerName === 'store';
+        order.customerName === 'Mandir' || order.customerName === 'Store';
 
       const itemId = order._id;
       // const deleteUrl = isStoreOrder
@@ -168,7 +170,7 @@ function OrderPlaceCard() {
   };
 
   return (
-    <div className="container vh-100">
+    <div className="container-fluid vh-100">
       <h1 className="text-center mt-4 mb-5 order_title">Orders</h1>
       {!isNotificationEnabled && (
         <div className="text-center mb-4">
@@ -177,7 +179,7 @@ function OrderPlaceCard() {
           </button>
         </div>
       )}
-      <div className="row row-cols-1 row-cols-md-3">
+      <div className="row row-cols-1 row-cols-md-5">
         {orderItems.map((order, index) => (
           <div className="col mb-4" key={order._id}>
             <div className={getOrderCardClass(order.customerName)}>
@@ -206,14 +208,32 @@ function OrderPlaceCard() {
                       className="btn btn-success ms-2 mt-3"
                       onClick={() => handleDone(order)}
                     >
-                      Done
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-check-circle-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                      </svg>
                     </button>
                     <button
                       type="button"
                       className="btn btn-danger ms-2 mt-3"
                       onClick={() => cancelOrder(order)}
                     >
-                      Cancel
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-trash3-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                      </svg>
                     </button>
                   </div>
                   <div key={order._id}>
