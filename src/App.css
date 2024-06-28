@@ -181,7 +181,10 @@ nav ul li a {
   border-radius: 25px 25px 0 0 !important;
 }
 .item_container {
-  height: 130px;
+  height: auto;
+}
+.orders_card {
+  padding: 0px 4px !important;
 }
 .order_title {
   font-family: Ubuntu;
@@ -198,23 +201,30 @@ nav ul li a {
   font-size: large;
 }
 .order_datetime {
-  margin-top: 28px;
+  margin-top: 0px;
+  font-size: 12px;
+}
+.btn-done {
+  margin: 6px 0px 0px 0px;
+}
+.btn-cancel {
+  margin: 6px 0px 0px 6px;
 }
 /* .card_wrapper {
   margin-bottom: 12px !;
 } */
 .card-body {
-  padding: 12px !important;
+  padding: 14px !important;
 }
 .card_style {
   padding-top: 6px !important;
   padding-bottom: 10px !important;
 }
 .bg-mandir {
-  background-color: #ffd69f !important;
+  background-color: #ffeace !important;
 }
 .bg-store {
-  background-color: #dae8ff !important;
+  background-color: #b3c6fa !important;
 }
 /* Order List page  */
 .orderListItem {
@@ -237,5 +247,15 @@ nav ul li a {
   }
   .summary {
     margin-bottom: 20px;
+  }
+  .order_datetime {
+    font-size: 10px;
+  }
+  .btn-done {
+    margin-top: 6px;
+  }
+  .btn-cancel {
+    margin-left: 6px;
+    margin-top: 6px !important;
   }
 }

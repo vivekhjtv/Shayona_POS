@@ -47,8 +47,13 @@ function OrderPlaceCard() {
         { name: 'Dabeli', quantity: order.dabeli },
         { name: 'Lilwa', quantity: order.lilwa },
         { name: 'Patties', quantity: order.patties },
-      ].filter((item) => item.quantity), // Remove items with no quantity
-      customerName: order.store, // Set customerName based on store
+        { name: 'Veg Pizza', quantity: order.veg_pizza },
+        { name: 'Cheese Pizza', quantity: order.cheese_pizza },
+        { name: 'Khichadi', quantity: order.khichadi },
+        { name: 'Papadi lot', quantity: order.papadi_no_lot },
+        { name: 'Pav Bhaji', quantity: order.pav_bhaji },
+      ].filter((item) => item.quantity > 0),
+      customerName: order.store,
       date: order.easternDate,
       time: order.easternTime,
     }));
@@ -160,9 +165,9 @@ function OrderPlaceCard() {
 
   const getOrderCardClass = (store) => {
     switch (store) {
-      case 'mandir':
+      case 'Mandir':
         return 'card card_order bg-mandir';
-      case 'store':
+      case 'Store':
         return 'card card_order bg-store';
       default:
         return 'card card_order bg-light';
@@ -179,14 +184,19 @@ function OrderPlaceCard() {
           </button>
         </div>
       )}
-      <div className="row row-cols-1 row-cols-md-5">
+      <div className="row row-cols-1 row-cols-md-5 ps-2 pe-2">
         {orderItems.map((order, index) => (
-          <div className="col mb-4" key={order._id}>
+          <div className="col orders_card mb-4" key={order._id}>
             <div className={getOrderCardClass(order.customerName)}>
               <div className="card-header order_header d-flex justify-content-between align-items-center">
-                <div className="order_number">{`OrderNumber #00${
-                  index + 1
-                }`}</div>
+                <div className="">
+                  <div className="order_number">{`Order #0${index + 1}`}</div>
+                  <div key={order._id}>
+                    <div className="order_datetime">
+                      {order.time.replace(/:\d{2}(?=\s)/, '')}
+                    </div>
+                  </div>
+                </div>
                 <div key={order._id}>
                   <span className="customer_name">{order.customerName}</span>
                 </div>
@@ -205,13 +215,14 @@ function OrderPlaceCard() {
                   <div>
                     <button
                       type="button"
-                      className="btn btn-success ms-2 mt-3"
+                      className="btn btn-success btn-done"
                       onClick={() => handleDone(order)}
+                      style={{ padding: '0.25em 0.5em' }} // Adjust padding if necessary
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
+                        width="12" // Set size to 12
+                        height="12" // Set size to 12
                         fill="currentColor"
                         className="bi bi-check-circle-fill"
                         viewBox="0 0 16 16"
@@ -221,13 +232,14 @@ function OrderPlaceCard() {
                     </button>
                     <button
                       type="button"
-                      className="btn btn-danger ms-2 mt-3"
+                      className="btn btn-danger btn-cancel"
                       onClick={() => cancelOrder(order)}
+                      style={{ padding: '0.25em 0.5em' }} // Adjust padding if necessary
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
+                        width="12" // Set size to 12
+                        height="12" // Set size to 12
                         fill="currentColor"
                         className="bi bi-trash3-fill"
                         viewBox="0 0 16 16"
@@ -235,9 +247,6 @@ function OrderPlaceCard() {
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
                       </svg>
                     </button>
-                  </div>
-                  <div key={order._id}>
-                    <div className="order_datetime">{`${order.time}`}</div>
                   </div>
                 </div>
               </div>

@@ -40,6 +40,36 @@ function MandirBulkOrder() {
       placeholder: 'Enter patties quantity',
       inputType: 'input',
     },
+    {
+      name: 'veg_pizza',
+      label: 'Veg Pizza',
+      placeholder: 'Enter veg pizza quantity',
+      inputType: 'input',
+    },
+    {
+      name: 'cheese_pizza',
+      label: 'Cheese Pizza',
+      placeholder: 'Enter Cheese Pizza quantity',
+      inputType: 'input',
+    },
+    {
+      name: 'khichadi',
+      label: 'Khichadi',
+      placeholder: 'Enter Khichadi quantity',
+      inputType: 'input',
+    },
+    {
+      name: 'papadi_no_lot',
+      label: 'Papadi no lot',
+      placeholder: 'Enter Papadi no lot quantity',
+      inputType: 'input',
+    },
+    {
+      name: 'pav_bhaji',
+      label: 'Pav Bhaji',
+      placeholder: 'Enter Pav Bhaji quantity',
+      inputType: 'input',
+    },
   ];
 
   const handleChange = (e, name) => {
@@ -64,6 +94,11 @@ function MandirBulkOrder() {
         dabeli: quantity.dabeli,
         lilwa: quantity.lilwa,
         patties: quantity.patties,
+        veg_pizza: quantity.veg_pizza,
+        cheese_pizza: quantity.cheese_pizza,
+        khichadi: quantity.khichadi,
+        papadi_no_lot: quantity.papadi_no_lot,
+        pav_bhaji: quantity.pav_bhaji,
         easternDate: easternDate,
         easternTime: easternTime,
         store: store,
@@ -75,6 +110,11 @@ function MandirBulkOrder() {
         dabeli: '',
         lilwa: '',
         patties: '',
+        veg_pizza: '',
+        cheese_pizza: '',
+        khichadi: '',
+        papadi_no_lot: '',
+        pav_bhaji: '',
       });
     } catch (error) {
       console.error('Error saving order:', error);
