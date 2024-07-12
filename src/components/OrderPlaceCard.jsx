@@ -52,7 +52,7 @@ function OrderPlaceCard() {
         { name: 'Khichadi', quantity: order.khichadi },
         { name: 'Papadi lot', quantity: order.papadi_no_lot },
         { name: 'Pav Bhaji', quantity: order.pav_bhaji },
-      ].filter((item) => item.quantity > 0),
+      ].filter((item) => item.quantity && item.quantity !== '0'),
       customerName: order.store,
       date: order.easternDate,
       time: order.easternTime,
@@ -60,7 +60,6 @@ function OrderPlaceCard() {
 
     setOrderItems([...items, ...formattedStoreOrders]);
   };
-
   const enableNotifications = () => {
     fetchAllOrders();
     notificationSound.current
@@ -173,7 +172,6 @@ function OrderPlaceCard() {
         return 'card card_order bg-light';
     }
   };
-
   return (
     <div className="container-fluid vh-100">
       <h1 className="text-center mt-4 mb-5 order_title">Orders</h1>
