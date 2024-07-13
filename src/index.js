@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
-
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import ShopContainer from './components/ShopContainer';
@@ -13,6 +12,8 @@ import POSContextWrapper from './contexts/PosContext';
 import OrderList from './components/OrderList';
 import StockInfoTable from './components/StockInfoTable';
 import MandirOrder from './components/Mandir/MandirOrder';
+import OrderForm from './components/OrderBook/OrderForm';
+import OrderFormCards from './components/OrderBook/OrderFormCards';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: 'mandir',
         Component: MandirOrder,
+      },
+      {
+        path: 'orderForm',
+        Component: OrderForm,
+      },
+      {
+        path: 'orderCard',
+        Component: OrderFormCards,
       },
     ],
   },

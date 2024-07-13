@@ -27,6 +27,9 @@ function Header() {
             <Link type="button" to="/mandir" className="btn me-2">
               Mandir Order
             </Link>
+            <Link type="button" to="/orderForm" className="btn  me-2">
+              Order Form
+            </Link>
 
             {/* <button type="button" className="btn btn-outline-light me-2">
               Login
