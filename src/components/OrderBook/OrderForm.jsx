@@ -51,7 +51,8 @@ const OrderForm = () => {
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
 
     try {
-      await axios.post('http://localhost:8000/api/orderForm', {
+      // await axios.post('http://localhost:8000/api/orderForm', {
+      await axios.post('https://shayona-orders.vercel.app/api/orderForm', {
         orderDate: orderData.orderDate,
         orderTime: orderData.orderTime,
         orderNote: orderData.orderNote,

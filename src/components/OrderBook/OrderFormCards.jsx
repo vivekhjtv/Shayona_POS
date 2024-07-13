@@ -12,7 +12,10 @@ function OrderFormCards() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/orderForm');
+        const response = await axios.get(
+          'https://shayona-orders.vercel.app/api/orderForm'
+        );
+        // const response = await axios.get('http://localhost:8000/api/orderForm');
         setOrders(response.data);
       } catch (error) {
         console.error('Error fetching orders:', error);
@@ -42,7 +45,10 @@ function OrderFormCards() {
   // Function to delete an order
   const handleDeleteOrder = async (orderId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/orderForm/${orderId}`);
+      await axios.delete(
+        `https://shayona-orders.vercel.app/api/orderForm/${orderId}`
+      );
+      //   await axios.delete(`http://localhost:8000/api/orderForm/${orderId}`);
       setOrders(orders.filter((order) => order._id !== orderId));
     } catch (error) {
       console.error('Error deleting order:', error);
