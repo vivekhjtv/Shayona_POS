@@ -30,16 +30,9 @@ function Header() {
             <Link type="button" to="/orderForm" className="btn  me-2">
               Order Form
             </Link>
-
-            {/* <button type="button" className="btn btn-outline-light me-2">
-              Login
-            </button>
-            <button type="button" className="btn btn-warning me-2">
-              Sign-up
-            </button>
-            <button type="button" className="btn btn-outline-light">
-              Logout
-            </button> */}
+            <Link type="button" to="/orderCard" className="btn  me-2">
+              Catering Orders
+            </Link>
           </div>
         </div>
       </div>
