@@ -22,7 +22,7 @@ function OrderList() {
     try {
       const response = await axios.get(
         // 'http://localhost:8000/api/orders'
-        'https://shayona-orders.vercel.app/api/orders'
+        'https://shayona-pos-backend.onrender.com/api/orders'
       );
       setOrderItems(response.data);
       setFilteredItems(response.data);

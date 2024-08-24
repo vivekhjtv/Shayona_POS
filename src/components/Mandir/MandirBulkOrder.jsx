@@ -88,7 +88,7 @@ function MandirBulkOrder() {
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
     try {
       // await axios.post('http://localhost:8000/api/store-order', {
-      await axios.post('https://shayona-orders.vercel.app/api/store-order', {
+      await axios.post('https://shayona-pos-backend.onrender.com/api/store-order', {
         samosa: quantity.samosa,
         puff: quantity.puff,
         dabeli: quantity.dabeli,

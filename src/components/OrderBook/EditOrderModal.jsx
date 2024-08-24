@@ -24,7 +24,7 @@ const EditOrderModal = ({ show, handleClose, order }) => {
   const handleSubmit = async () => {
     try {
       const response = await axios.put(
-        `https://shayona-orders.vercel.app/api/orderForm/${order._id}`, // Assuming your API endpoint for updating an order by ID
+        `https://shayona-pos-backend.onrender.com/api/orderForm/${order._id}`, // Assuming your API endpoint for updating an order by ID
         // `http://localhost:8000/api/orderForm/${order._id}`,
         editedOrder
       );

@@ -13,7 +13,7 @@ function OrderFormCards() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          'https://shayona-orders.vercel.app/api/orderForm'
+          'https://shayona-pos-backend.onrender.com/api/orderForm'
         );
         // const response = await axios.get('http://localhost:8000/api/orderForm');
         setOrders(response.data);
@@ -46,7 +46,7 @@ function OrderFormCards() {
   const handleDeleteOrder = async (orderId) => {
     try {
       await axios.delete(
-        `https://shayona-orders.vercel.app/api/orderForm/${orderId}`
+        `https://shayona-pos-backend.onrender.com/api/orderForm/${orderId}`
       );
       //   await axios.delete(`http://localhost:8000/api/orderForm/${orderId}`);
       setOrders(orders.filter((order) => order._id !== orderId));
