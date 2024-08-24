@@ -52,7 +52,7 @@ const OrderForm = () => {
 
     try {
       // await axios.post('http://localhost:8000/api/orderForm', {
-      await axios.post('https://shayona-orders.vercel.app/api/orderForm', {
+      await axios.post('https://shayona-pos-backend.onrender.com/api/orderForm', {
         orderDate: orderData.orderDate,
         orderTime: orderData.orderTime,
         orderNote: orderData.orderNote,
