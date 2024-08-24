@@ -18,7 +18,7 @@ function RightItemsList() {
     try {
       // const response = await axios.get('http://localhost:8000/api/stock');
       const response = await axios.get(
-        'https://shayona-pos-backend.onrender.com/api/stock'
+        'https://shayona-orders.vercel.app/api/stock'
       );
       setItemCount(response.data[0]); // assuming response.data is an array and we need the first object
     } catch (error) {
@@ -29,7 +29,7 @@ function RightItemsList() {
   const updateStockCount = async (item, newCount) => {
     try {
       // await axios.put(`http://localhost:8000/api/stock/${item}`, {
-      await axios.put(`https://shayona-pos-backend.onrender.com/api/stock/${item}`, {
+      await axios.put(`https://shayona-orders.vercel.app/api/stock/${item}`, {
         count: newCount,
       });
       setItemCount((prevCount) => ({
