@@ -11,7 +11,7 @@ function OrderPlaceCard() {
     try {
       // const response = await axios.get('http://localhost:8000/api/items');
       const response = await axios.get(
-        'https://shayona-pos-backend.onrender.com/api/items'
+        'https://shayona-orders.vercel.app/api/items'
       );
       return response.data;
     } catch (error) {
@@ -24,7 +24,7 @@ function OrderPlaceCard() {
     try {
       // const response = await axios.get('http://localhost:8000/api/store-order');
       const response = await axios.get(
-        'https://shayona-pos-backend.onrender.com/api/store-order'
+        'https://shayona-orders.vercel.app/api/store-order'
       );
       return response.data;
     } catch (error) {
@@ -105,7 +105,7 @@ function OrderPlaceCard() {
         // Store order logic
         console.log(isStoreOrder);
         // await axios.post('http://localhost:8000/api/store', {
-        await axios.post('https://shayona-pos-backend.onrender.com/api/store', {
+        await axios.post('https://shayona-orders.vercel.app/api/store', {
           orders: order.items,
           customerName: order.customerName,
           date: order.date,
@@ -116,12 +116,12 @@ function OrderPlaceCard() {
         const itemId = order._id;
         // await axios.delete(`http://localhost:8000/api/store-order/${itemId}`);
         await axios.delete(
-          `https://shayona-pos-backend.onrender.com/api/store-order/${itemId}`
+          `https://shayona-orders.vercel.app/api/store-order/${itemId}`
         );
       } else {
         // Regular item logic
         // await axios.post('http://localhost:8000/api/orders', {
-        await axios.post('https://shayona-pos-backend.onrender.com/api/orders', {
+        await axios.post('https://shayona-orders.vercel.app/api/orders', {
           orders: order.items,
           customerName: order.customerName,
           date: order.date,
@@ -132,7 +132,7 @@ function OrderPlaceCard() {
         const itemId = order._id;
         // await axios.delete(`http://localhost:8000/api/items/${itemId}`);
         await axios.delete(
-          `https://shayona-pos-backend.onrender.com/api/items/${itemId}`
+          `https://shayona-orders.vercel.app/api/items/${itemId}`
         );
       }
 
@@ -152,8 +152,8 @@ function OrderPlaceCard() {
       //   ? `http://localhost:8000/api/store-order/${itemId}`
       //   : `http://localhost:8000/api/items/${itemId}`;
       const deleteUrl = isStoreOrder
-        ? `https://shayona-pos-backend.onrender.com/api/store-order/${itemId}`
-        : `https://shayona-pos-backend.onrender.com/api/items/${itemId}`;
+        ? `https://shayona-orders.vercel.app/api/store-order/${itemId}`
+        : `https://shayona-orders.vercel.app/api/items/${itemId}`;
 
       await axios.delete(deleteUrl);
       fetchAllOrders();

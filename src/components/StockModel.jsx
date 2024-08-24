@@ -59,7 +59,7 @@ function StockModel() {
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
     try {
       // await axios.post('http://localhost:8000/api/stock', {
-      await axios.post('https://shayona-pos-backend.onrender.com/api/stock', {
+      await axios.post('https://shayona-orders.vercel.app/api/stock', {
         khichadi: quantity.khichadi,
         pav_bhaji: quantity.bhaji,
         lot: quantity.lot,

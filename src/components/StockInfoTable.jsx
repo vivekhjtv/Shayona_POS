@@ -10,7 +10,7 @@ function StockInfoTable() {
       try {
         // const response = await axios.get('http://localhost:8000/api/stock');
         const response = await axios.get(
-          'https://shayona-pos-backend.onrender.com/api/stock'
+          'https://shayona-orders.vercel.app/api/stock'
         );
         setStockData(response.data);
       } catch (error) {
@@ -25,7 +25,7 @@ function StockInfoTable() {
     try {
       // await axios.delete(`http://localhost:8000/api/stock/${itemId}`);
       await axios.delete(
-        `https://shayona-pos-backend.onrender.com/api/stock/${itemId}`
+        `https://shayona-orders.vercel.app/api/stock/${itemId}`
       );
       setStockData(stockData.filter((item) => item._id !== itemId));
     } catch (error) {
