@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 const POSContext = createContext({});
 
+// const URL = process.env.GLOBAL_URL;
+
 const POSContextWrapper = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [customerName, setCustomerName] = useState('');
@@ -40,12 +42,13 @@ const POSContextWrapper = ({ children }) => {
     const postSelectedItemsToDataBase = async (items) => {
       try {
         // await axios.post(`http://localhost:8000/api/items`, {
-        await axios.post(`https://shayona-orders.vercel.app/api/items`, {
+        await axios.post(`https://shayona-pos-backend.onrender.com/api/items`, {
           items: items,
           customerName: name,
           date: easternDate,
           time: easternTime,
         });
+
       } catch (error) {
         console.error('Error adding items:', error);
       }
