@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
-const POSContext = createContext({});
 
-// const URL = process.env.GLOBAL_URL;
+const POSContext = createContext({});
 
 const POSContextWrapper = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [customerName, setCustomerName] = useState('');
+  const [notification, setNotification] = useState('');
 
   const addItemToLeftList = (itemName, price) => {
     const existingItem = selectedItems.find((item) => item.name === itemName);
@@ -48,7 +48,6 @@ const POSContextWrapper = ({ children }) => {
           date: easternDate,
           time: easternTime,
         });
-
       } catch (error) {
         console.error('Error adding items:', error);
       }
@@ -57,6 +56,14 @@ const POSContextWrapper = ({ children }) => {
     await postSelectedItemsToDataBase(selectedItems);
     setSelectedItems([]);
     setCustomerName('');
+    
+    // Show notification message
+    setNotification('Thank you for your order. Your order is in preparation.');
+    
+    // Hide notification message after 3 seconds
+    setTimeout(() => {
+      setNotification('');
+    }, 3000);
   };
 
   const contextValue = {
@@ -66,10 +73,18 @@ const POSContextWrapper = ({ children }) => {
     handlePlaceOrder,
     customerName,
     setCustomerName,
+    notification, // Add notification to context
   };
 
   return (
-    <POSContext.Provider value={contextValue}>{children}</POSContext.Provider>
+    <POSContext.Provider value={contextValue}>
+      {children}
+      {notification && (
+        <div className="notification">
+          {notification}
+        </div>
+      )}
+    </POSContext.Provider>
   );
 };
 

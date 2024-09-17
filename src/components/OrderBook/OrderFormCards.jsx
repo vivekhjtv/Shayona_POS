@@ -17,6 +17,7 @@ function OrderFormCards() {
         );
         // const response = await axios.get('http://localhost:8000/api/orderForm');
         setOrders(response.data);
+        // console.log(response.data)
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -24,7 +25,7 @@ function OrderFormCards() {
 
     fetchOrders();
   }, []);
-
+// console.log(orders)
   // Function to handle opening the edit modal
   const handleEditModalOpen = (order) => {
     setSelectedOrder(order);

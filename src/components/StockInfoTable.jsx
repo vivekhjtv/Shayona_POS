@@ -60,6 +60,8 @@ function StockInfoTable() {
                   <div>Cheese Pizza</div>
                   <div>Veg Pizza</div>
                   <div>Special Thali</div>
+                  <div>Pesto Pizza</div>
+                  <div>Samosa Chat</div>
                 </td>
                 <td>
                   <div>{item.khichadi}</div>
@@ -68,6 +70,8 @@ function StockInfoTable() {
                   <div>{item.cheese_pizza}</div>
                   <div>{item.veg_pizza}</div>
                   <div>{item.thali}</div>
+                  <div>{item.pesto}</div>
+                  <div>{item.chat}</div>
                 </td>
                 <td>{item.easternDate}</td>
                 <td>{item.easternTime}</td>

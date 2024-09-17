@@ -4,7 +4,7 @@ import { usePOSContext } from '../contexts/PosContext';
 function LeftSelectItem() {
   const {
     selectedItems,
-    // setSelectedItems,
+    setSelectedItems,
     handlePlaceOrder,
     customerName,
     setCustomerName,
@@ -21,25 +21,25 @@ function LeftSelectItem() {
     setCustomerName(capitalizedName);
   };
 
-  // const incrementQuantity = (itemName) => {
-  //   setSelectedItems((prevItems) =>
-  //     prevItems.map((item) =>
-  //       item.name === itemName ? { ...item, quantity: item.quantity + 1 } : item
-  //     )
-  //   );
-  // };
+  const incrementQuantity = (itemName) => {
+    setSelectedItems((prevItems) =>
+      prevItems.map((item) =>
+        item.name === itemName ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
 
-  // const decrementQuantity = (itemName) => {
-  //   setSelectedItems((prevItems) =>
-  //     prevItems
-  //       .map((item) =>
-  //         item.name === itemName && item.quantity > 0
-  //           ? { ...item, quantity: item.quantity - 1 }
-  //           : item
-  //       )
-  //       .filter((item) => item.quantity > 0)
-  //   );
-  // };
+  const decrementQuantity = (itemName) => {
+    setSelectedItems((prevItems) =>
+      prevItems
+        .map((item) =>
+          item.name === itemName && item.quantity > 0
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
 
   const total = selectedItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -88,23 +88,23 @@ function LeftSelectItem() {
                 <span className="item-name list_title">{item.name}</span>
               </div>
               <div className="col-md-4 text-right ">
-                {/* <button
+                <button
                   className="btn btn-primary px-3 list_title"
                   onClick={() => decrementQuantity(item.name)}
                   type="button"
                 >
                   -
-                </button> */}
+                </button>
                 <span className="quantity list_title mx-3">
                   {item.quantity}
                 </span>
-                {/* <button
+                <button
                   className="btn btn-primary px-3 list_title"
                   onClick={() => incrementQuantity(item.name)}
                   type="button"
                 >
                   +
-                </button> */}
+                </button>
               </div>
               <div className="col-md-3">
                 <span className="item-name list_title">{item.price}</span>

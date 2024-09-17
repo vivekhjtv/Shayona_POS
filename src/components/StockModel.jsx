@@ -9,6 +9,8 @@ function StockModel() {
     cheesePizza: '',
     vegPizza: '',
     thali: '',
+    pesto: '',
+    chat: '',
   });
 
   const items = [
@@ -42,6 +44,16 @@ function StockModel() {
       label: 'Special Thali',
       placeholder: 'Enter Special Thali quantity',
     },
+    {
+      name: 'pesto',
+      label: 'Pesto Pizza',
+      placeholder: 'Enter Pesto Pizza quantity',
+    },
+    {
+      name: 'chat',
+      label: 'Samosa Chat',
+      placeholder: 'Enter Samosa Chat quantity',
+    },
   ];
 
   const handleChange = (e, name) => {
@@ -66,6 +78,8 @@ function StockModel() {
         veg_pizza: quantity.vegPizza,
         cheese_pizza: quantity.cheesePizza,
         thali: quantity.thali,
+        pesto: quantity.pesto,
+        chat: quantity.chat,
         easternDate: easternDate,
         easternTime: easternTime,
       });
@@ -77,6 +91,8 @@ function StockModel() {
         cheesePizza: '',
         vegPizza: '',
         thali: '',
+        pesto: '',
+        chat: '',
       });
     } catch (error) {
       console.error('Error saving order:', error);
