@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { usePOSContext } from '../contexts/PosContext';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { usePOSContext } from "../contexts/PosContext";
+import axios from "axios";
 
 function RightItemsList() {
   const [itemCount, setItemCount] = useState({
-    khichadi: '',
-    pavBhaji: '',
-    lot: '',
-    cheesePizza: '',
-    vegPizza: '',
-    thali: '',
+    khichadi: "",
+    pavBhaji: "",
+    lot: "",
+    cheesePizza: "",
+    vegPizza: "",
+    thali: "",
+    pesto: "",
+    chat: "",
   });
 
   const { addItemToLeftList } = usePOSContext();
@@ -18,11 +20,12 @@ function RightItemsList() {
     try {
       // const response = await axios.get('http://localhost:8000/api/stock');
       const response = await axios.get(
-        'https://shayona-orders.vercel.app/api/stock'
+        "https://shayona-orders.vercel.app/api/stock"
       );
+      // console.log(response.data)
       setItemCount(response.data[0]); // assuming response.data is an array and we need the first object
     } catch (error) {
-      console.error('Error fetching order items:', error);
+      console.error("Error fetching order items:", error);
     }
   };
 
@@ -37,17 +40,18 @@ function RightItemsList() {
         [item]: newCount,
       }));
     } catch (error) {
-      console.error('Error updating stock count:', error);
+      console.error("Error updating stock count:", error);
     }
   };
 
   const handleItemClick = (item, price, currentCount) => {
     if (currentCount > 0) {
+
       const newCount = currentCount - 1;
       updateStockCount(item, newCount);
       addItemToLeftList(item, price);
     } else {
-      alert('Out of stock');
+      alert("Out of stock");
     }
   };
 
@@ -59,11 +63,11 @@ function RightItemsList() {
     <div className="item-selection">
       <h2 className="items_title">Available Items</h2>
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('Khichadi', 5.0, itemCount?.khichadi)
+              handleItemClick("khichadi", 5.0, itemCount?.khichadi)
             }
           >
             <img src="khichadi.jpeg" className="card-img-top" alt="Khichadi" />
@@ -74,11 +78,11 @@ function RightItemsList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('Pav Bhaji', 6.0, itemCount?.pav_bhaji)
+              handleItemClick("pav_bhaji", 6.0, itemCount?.pav_bhaji)
             }
           >
             <img
@@ -93,10 +97,10 @@ function RightItemsList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
-            onClick={() => handleItemClick('Lot', 3.0, itemCount?.lot)}
+            onClick={() => handleItemClick("lot", 3.0, itemCount?.lot)}
           >
             <img src="Khichu-3.jpg" className="card-img-top" alt="Papdi lot" />
             <div className="card-body">
@@ -106,11 +110,24 @@ function RightItemsList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
+          <div
+            className="card card_item mb-3"
+            onClick={() => handleItemClick("chat", 5.0, itemCount?.chat)}
+          >
+            <img src="chat.jpeg" className="card-img-top" alt="Samosa Chat" />
+            <div className="card-body">
+              <h5 className="card-title item_title">
+                Samosa Chat ({itemCount?.chat})
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('Cheese Pizza', 6.0, itemCount?.cheese_pizza)
+              handleItemClick("cheese_pizza", 6.0, itemCount?.cheese_pizza)
             }
           >
             <img
@@ -125,11 +142,11 @@ function RightItemsList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('Veg Pizza', 7.0, itemCount?.veg_pizza)
+              handleItemClick("veg_pizza", 7.0, itemCount?.veg_pizza)
             }
           >
             <img
@@ -144,10 +161,25 @@ function RightItemsList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
-            onClick={() => addItemToLeftList('Extra Pav', 1.0)}
+            onClick={() =>
+              handleItemClick("pesto", 8.0, itemCount?.pesto)
+            }
+          >
+            <img src="pesto.jpeg" className="card-img-top" alt="Pesto Pizza" />
+            <div className="card-body">
+              <h5 className="card-title item_title">
+                Pesto Pizza ({itemCount?.pesto})
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div
+            className="card card_item mb-3"
+            onClick={() => addItemToLeftList("Extra Pav", 1.0)}
           >
             <img
               src="extra_pav.jpeg"
@@ -159,11 +191,11 @@ function RightItemsList() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div
             className="card card_item mb-3"
             onClick={() =>
-              handleItemClick('Thali Special', 10.0, itemCount?.thali)
+              handleItemClick("thali", 10.0, itemCount?.thali)
             }
           >
             <img

@@ -7,6 +7,16 @@ function OrderPlaceCard() {
   const prevOrderItems = useRef([]);
   const notificationSound = useRef(new Audio('alert.mp3'));
 
+  const itemNameMapping = {
+    pav_bhaji: 'Pav Bhaji',
+    pesto: 'Pesto Pizza',
+    cheese_pizza: 'Cheese Pizza',
+    veg_pizza: 'Veg Pizza',
+    khichadi: 'Khichadi',
+    lot: 'Papdi Lot',
+    chat: 'Samosa Chat',
+  };
+
   const getItemsFromDataBase = async () => {
     try {
       // const response = await axios.get('http://localhost:8000/api/items');
@@ -38,7 +48,7 @@ function OrderPlaceCard() {
       getItemsFromDataBase(),
       getStoreOrdersFromDataBase(),
     ]);
-
+console.log(items)
     const formattedStoreOrders = storeOrders.map((order) => ({
       ...order,
       items: [
@@ -204,7 +214,9 @@ function OrderPlaceCard() {
                   {order.items.map((item, itemIndex) => (
                     <div key={item._id || item.name}>
                       <h5 className="card-text order_itemList">
-                        {item.name} - {item.quantity}
+                        
+                        {itemNameMapping[item.name] || item.name} -{' '}
+                        {item.quantity}
                       </h5>
                     </div>
                   ))}
