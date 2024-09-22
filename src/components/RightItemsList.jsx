@@ -12,6 +12,9 @@ function RightItemsList() {
     thali: "",
     pesto: "",
     chat: "",
+    lemonade: "",
+    tea: "",
+    coffee: "",
   });
 
   const { addItemToLeftList } = usePOSContext();
@@ -206,6 +209,63 @@ function RightItemsList() {
             <div className="card-body">
               <h5 className="card-title item_title">
                 Special Thali ({itemCount?.thali})
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div
+            className="card card_item mb-3"
+            onClick={() =>
+              handleItemClick("lemonade", 3.50, itemCount?.lemonade)
+            }
+          >
+            <img
+              src="lemonade.jpeg"
+              className="card-img-top"
+              alt="Lemonade"
+            />
+            <div className="card-body">
+              <h5 className="card-title item_title">
+                Lemonade ({itemCount?.lemonade})
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div
+            className="card card_item mb-3"
+            onClick={() =>
+              handleItemClick("tea", 2.50, itemCount?.tea)
+            }
+          >
+            <img
+              src="tea.jpeg"
+              className="card-img-top"
+              alt="Tea"
+            />
+            <div className="card-body">
+              <h5 className="card-title item_title">
+                Tea ({itemCount?.tea})
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div
+            className="card card_item mb-3"
+            onClick={() =>
+              handleItemClick("coffee", 2.50, itemCount?.coffee)
+            }
+          >
+            <img
+              src="coffee.jpeg"
+              className="card-img-top"
+              alt="Coffee"
+            />
+            <div className="card-body">
+              <h5 className="card-title item_title">
+                Coffee ({itemCount?.coffee})
               </h5>
             </div>
           </div>

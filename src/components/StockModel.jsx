@@ -11,6 +11,10 @@ function StockModel() {
     thali: '',
     pesto: '',
     chat: '',
+    lemonade: "",
+    tea: "",
+    coffee: "",
+
   });
 
   const items = [
@@ -54,6 +58,21 @@ function StockModel() {
       label: 'Samosa Chat',
       placeholder: 'Enter Samosa Chat quantity',
     },
+    {
+      name: 'lemonade',
+      label: 'Lemonade',
+      placeholder: 'Enter Lemonade quantity',
+    },
+    {
+      name: 'tea',
+      label: 'Tea',
+      placeholder: 'Enter Tea quantity',
+    },
+    {
+      name: 'coffee',
+      label: 'Samosa Chat',
+      placeholder: 'Enter Coffee quantity',
+    },
   ];
 
   const handleChange = (e, name) => {
@@ -80,6 +99,9 @@ function StockModel() {
         thali: quantity.thali,
         pesto: quantity.pesto,
         chat: quantity.chat,
+        lemonade: quantity.lemonade,
+        tea: quantity.tea,
+        coffee: quantity.coffee,
         easternDate: easternDate,
         easternTime: easternTime,
       });
@@ -93,6 +115,9 @@ function StockModel() {
         thali: '',
         pesto: '',
         chat: '',
+        lemonade: '',
+        tea: '',
+        coffee: '',
       });
     } catch (error) {
       console.error('Error saving order:', error);

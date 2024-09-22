@@ -24,6 +24,8 @@ const POSContextWrapper = ({ children }) => {
   };
 
   const handlePlaceOrder = async (name) => {
+    const customerField = document.getElementsByClassName('customer_name')[0];
+    
     if (selectedItems.length === 0) {
       alert('Please Select Items');
       return;
@@ -31,17 +33,24 @@ const POSContextWrapper = ({ children }) => {
 
     if (!name) {
       alert('Please Enter Customer Name');
+      if (customerField) {
+        customerField.style.border = '2px solid red'; // Highlight the field with red border
+      }
       return;
     }
+
+    // Reset border to original when customer name is provided
+    if (customerField) {
+      customerField.style.border = '1px solid #ccc'; // Reset to the original border
+    }
+
     const currentDateTime = new Date();
     const options = { timeZone: 'America/Toronto', hour12: true };
-
     const easternDate = currentDateTime.toLocaleDateString('en-CA', options);
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
 
     const postSelectedItemsToDataBase = async (items) => {
       try {
-        // await axios.post(`http://localhost:8000/api/items`, {
         await axios.post(`https://shayona-orders.vercel.app/api/items`, {
           items: items,
           customerName: name,
@@ -64,6 +73,16 @@ const POSContextWrapper = ({ children }) => {
     setTimeout(() => {
       setNotification('');
     }, 3000);
+  };
+
+  const handleChange = (e) => {
+    setCustomerName(e.target.value);
+    
+    // Reset border to original as user starts typing
+    const customerField = document.getElementsByClassName('customer_name')[0];
+    if (customerField) {
+      customerField.style.border = '1px solid #ccc'; // Reset border to normal
+    }
   };
 
   const contextValue = {
