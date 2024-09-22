@@ -51,12 +51,13 @@ function LeftSelectItem() {
       <div className="row">
         <h2 className="summary_title">Selected Items</h2>
       </div>
-      <div className="col-sm-6 mb-1">
+      <div className="col-sm-9 mb-1">
         <input
           type="text"
-          className="form-control"
+          className="form-control customer_name"
           placeholder="Enter Customer Name"
           value={customerName}
+          style={{ fontSize: "26px" }}
           onChange={handleChange}
         />
       </div>

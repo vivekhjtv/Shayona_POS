@@ -62,6 +62,9 @@ function StockInfoTable() {
                   <div>Special Thali</div>
                   <div>Pesto Pizza</div>
                   <div>Samosa Chat</div>
+                  <div>Lemonade</div>
+                  <div>Tea</div>
+                  <div>Coffee</div>
                 </td>
                 <td>
                   <div>{item.khichadi}</div>
@@ -72,6 +75,9 @@ function StockInfoTable() {
                   <div>{item.thali}</div>
                   <div>{item.pesto}</div>
                   <div>{item.chat}</div>
+                  <div>{item.lemonade}</div>
+                  <div>{item.tea}</div>
+                  <div>{item.coffee}</div>
                 </td>
                 <td>{item.easternDate}</td>
                 <td>{item.easternTime}</td>

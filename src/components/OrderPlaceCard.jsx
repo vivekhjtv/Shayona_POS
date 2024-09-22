@@ -15,6 +15,9 @@ function OrderPlaceCard() {
     khichadi: 'Khichadi',
     lot: 'Papdi Lot',
     chat: 'Samosa Chat',
+    lemonade: 'Lemonade',
+    tea: "Tea",
+    coffee: "Coffee"
   };
 
   const getItemsFromDataBase = async () => {
