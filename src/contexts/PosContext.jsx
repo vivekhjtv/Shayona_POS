@@ -33,16 +33,16 @@ const POSContextWrapper = ({ children }) => {
 
     if (!name) {
       alert('Please Enter Customer Name');
-      // if (customerField) {
-      //   customerField.style.border = '2px solid red'; // Highlight the field with red border
-      // }
+      if (customerField) {
+        customerField.style.border = '2px solid red'; // Highlight the field with red border
+      }
       return;
     }
 
-    // // Reset border to original when customer name is provided
-    // if (customerField) {
-    //   customerField.style.border = '1px solid #ccc'; // Reset to the original border
-    // }
+    // Reset border to original when customer name is provided
+    if (customerField) {
+      customerField.style.border = '1px solid #ccc'; // Reset to the original border
+    }
 
     const currentDateTime = new Date();
     const options = { timeZone: 'America/Toronto', hour12: true };
