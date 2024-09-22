@@ -20,7 +20,7 @@ function Header() {
             <Link type="button" to="/" className="btn me-2">
               POS
             </Link>
-            <Link type="button" to="/stock" className="btn  me-2">
+            {/* <Link type="button" to="/stock" className="btn  me-2">
               Stock
             </Link>
             <StoreBulkOrder />
@@ -32,7 +32,7 @@ function Header() {
             </Link>
             <Link type="button" to="/orderCard" className="btn  me-2">
               Catering Orders
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
