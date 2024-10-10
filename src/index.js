@@ -1,63 +1,68 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import NotFound from './components/NotFound';
-import ShopContainer from './components/ShopContainer';
-import OrderPlaceCard from './components/OrderPlaceCard';
-import POSContextWrapper from './contexts/PosContext';
-import OrderList from './components/OrderList';
-import StockInfoTable from './components/StockInfoTable';
-import MandirOrder from './components/Mandir/MandirOrder';
-import OrderForm from './components/OrderBook/OrderForm';
-import OrderFormCards from './components/OrderBook/OrderFormCards';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import NotFound from "./components/NotFound";
+import ShopContainer from "./components/ShopContainer";
+import OrderPlaceCard from "./components/OrderPlaceCard";
+import POSContextWrapper from "./contexts/PosContext";
+import OrderList from "./components/OrderList";
+import StockInfoTable from "./components/StockInfoTable";
+import MandirOrder from "./components/Mandir/MandirOrder";
+import OrderForm from "./components/OrderBook/OrderForm";
+import OrderFormCards from "./components/OrderBook/OrderFormCards";
+import StoreBulkOrder from "./components/StoreBulkOrder";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     Component: App,
     children: [
       {
-        path: '/',
+        path: "/",
         Component: ShopContainer,
       },
       {
-        path: 'orders',
+        path: "orders",
         Component: OrderPlaceCard,
       },
       {
-        path: 'orderList',
+        path: "orderList",
         Component: OrderList,
       },
       {
-        path: 'stock',
+        path: "stock",
         Component: StockInfoTable,
       },
       {
-        path: 'mandir',
+        path: "mandir",
         Component: MandirOrder,
       },
       {
-        path: 'orderForm',
+        path: "orderForm",
         Component: OrderForm,
       },
       {
-        path: 'orderCard',
+        path: "orderCard",
         Component: OrderFormCards,
+      },
+      {
+        path: "store",
+        Component: StoreBulkOrder,
       },
     ],
   },
 
   {
-    path: '*',
+    path: "*",
     Component: NotFound,
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <POSContextWrapper>

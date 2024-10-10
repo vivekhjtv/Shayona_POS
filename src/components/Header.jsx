@@ -23,7 +23,7 @@ function Header() {
             {/* <Link type="button" to="/stock" className="btn  me-2">
               Stock
             </Link> */}
-            <StoreBulkOrder />
+            
             {/* <Link type="button" to="/mandir" className="btn me-2">
               Mandir Order
             </Link>

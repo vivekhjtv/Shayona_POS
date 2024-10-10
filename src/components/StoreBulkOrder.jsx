@@ -87,7 +87,7 @@ function StoreBulkOrder() {
     <>
       <button
         type="button"
-        className="btn me-2"
+        className="btn btn-primary me-2 mt-5 ms-5"
         data-bs-toggle="modal"
         data-bs-target="#orderModel"
       >
