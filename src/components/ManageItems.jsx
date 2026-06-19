@@ -39,6 +39,7 @@ function ManageItems() {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto-generate key from name while typing

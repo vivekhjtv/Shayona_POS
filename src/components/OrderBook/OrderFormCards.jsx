@@ -73,6 +73,7 @@ function OrderFormCards() {
 
   useEffect(() => {
     validateOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orders]);
 
   return (

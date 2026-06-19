@@ -126,6 +126,7 @@ function OrderList() {
     clearTimeout(retryTimer.current);
     getItemsFromDataBase(page, selectedFilter, selectedDate, 0);
     return () => clearTimeout(retryTimer.current); // cleanup on unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, selectedFilter, selectedDate]);
 
   const handleItemClick = (itemName) => {
