@@ -76,15 +76,7 @@ const POSContextWrapper = ({ children }) => {
     }, 3000);
   };
 
-  const handleChange = (e) => {
-    setCustomerName(e.target.value);
-    
-    // Reset border to original as user starts typing
-    const customerField = document.getElementsByClassName('customer_name')[0];
-    if (customerField) {
-      customerField.style.border = '1px solid #ccc'; // Reset border to normal
-    }
-  };
+
 
   const contextValue = {
     addItemToLeftList,
