@@ -80,6 +80,7 @@ function MandirBulkOrder() {
   };
 
   const addQuantity = async () => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     const store = 'Mandir';
     const currentDateTime = new Date();
     const options = { timeZone: 'America/Toronto', hour12: true };
@@ -87,8 +88,7 @@ function MandirBulkOrder() {
     const easternDate = currentDateTime.toLocaleDateString('en-CA', options);
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
     try {
-      // await axios.post('http://localhost:8000/api/store-order', {
-      await axios.post('https://shayona-orders.vercel.app/api/store-order', {
+      await axios.post(`${BASE_URL}/api/store-order`, {
         samosa: quantity.samosa,
         puff: quantity.puff,
         dabeli: quantity.dabeli,

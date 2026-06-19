@@ -133,8 +133,27 @@ nav ul li a {
 .total-placeholder:not(.visible) {
   display: none;
 }
+
 .selected_item_list {
   height: 470px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Elegant scrollbar styling for the selected items list */
+.selected_item_list::-webkit-scrollbar {
+  width: 6px;
+}
+.selected_item_list::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+.selected_item_list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.selected_item_list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 .total_container {
   align-content: center;

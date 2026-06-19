@@ -15,6 +15,7 @@ import MandirOrder from "./components/Mandir/MandirOrder";
 import OrderForm from "./components/OrderBook/OrderForm";
 import OrderFormCards from "./components/OrderBook/OrderFormCards";
 import StoreBulkOrder from "./components/StoreBulkOrder";
+import ManageItems from "./components/ManageItems";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "store",
         Component: StoreBulkOrder,
+      },
+      {
+        path: "manage-items",
+        Component: ManageItems,
       },
     ],
   },

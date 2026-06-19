@@ -50,8 +50,9 @@ const POSContextWrapper = ({ children }) => {
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
 
     const postSelectedItemsToDataBase = async (items) => {
+      const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
       try {
-        await axios.post(`https://shayona-orders.vercel.app/api/items`, {
+        await axios.post(`${BASE_URL}/api/items`, {
           items: items,
           customerName: name,
           date: easternDate,

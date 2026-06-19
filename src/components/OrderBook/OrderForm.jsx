@@ -50,9 +50,9 @@ const OrderForm = () => {
     const easternDate = currentDateTime.toLocaleDateString('en-CA', options);
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
 
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     try {
-      // await axios.post('http://localhost:8000/api/orderForm', {
-      await axios.post('https://shayona-orders.vercel.app/api/orderForm', {
+      await axios.post(`${BASE_URL}/api/orderForm`, {
         orderDate: orderData.orderDate,
         orderTime: orderData.orderTime,
         orderNote: orderData.orderNote,

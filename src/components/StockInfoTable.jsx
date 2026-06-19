@@ -3,30 +3,39 @@ import axios from 'axios';
 import StockModel from './StockModel';
 function StockInfoTable() {
   const [stockData, setStockData] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
+    
     // Fetch stock data from the API
     const fetchStockData = async () => {
       try {
-        // const response = await axios.get('http://localhost:8000/api/stock');
-        const response = await axios.get(
-          'https://shayona-orders.vercel.app/api/stock'
-        );
+        const response = await axios.get(`${BASE_URL}/api/stock`);
         setStockData(response.data);
       } catch (error) {
         console.error('Error fetching stock data:', error);
       }
     };
 
+    // Fetch dynamic products list
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/products`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
     fetchStockData();
+    fetchProducts();
   }, []);
 
   const handleDeleteClick = async (itemId) => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     try {
-      // await axios.delete(`http://localhost:8000/api/stock/${itemId}`);
-      await axios.delete(
-        `https://shayona-orders.vercel.app/api/stock/${itemId}`
-      );
+      await axios.delete(`${BASE_URL}/api/stock/${itemId}`);
       setStockData(stockData.filter((item) => item._id !== itemId));
     } catch (error) {
       console.error('Error deleting stock data:', error);
@@ -54,30 +63,16 @@ function StockInfoTable() {
             {stockData.map((item) => (
               <tr key={item._id}>
                 <td>
-                  <div>Khichadi</div>
-                  <div>Pav Bhaji</div>
-                  <div>Papdi Lot</div>
-                  <div>Cheese Pizza</div>
-                  <div>Veg Pizza</div>
-                  <div>Special Thali</div>
-                  <div>Pesto Pizza</div>
-                  <div>Samosa Chat</div>
-                  <div>Lemonade</div>
-                  <div>Tea</div>
-                  <div>Coffee</div>
+                  {products.map((p) => (
+                    <div key={p.key}>{p.name}</div>
+                  ))}
                 </td>
                 <td>
-                  <div>{item.khichadi}</div>
-                  <div>{item.pav_bhaji}</div>
-                  <div>{item.lot}</div>
-                  <div>{item.cheese_pizza}</div>
-                  <div>{item.veg_pizza}</div>
-                  <div>{item.thali}</div>
-                  <div>{item.pesto}</div>
-                  <div>{item.chat}</div>
-                  <div>{item.lemonade}</div>
-                  <div>{item.tea}</div>
-                  <div>{item.coffee}</div>
+                  {products.map((p) => (
+                    <div key={p.key}>
+                      {item[p.key] !== undefined ? item[p.key] : '-'}
+                    </div>
+                  ))}
                 </td>
                 <td>{item.easternDate}</td>
                 <td>{item.easternTime}</td>
