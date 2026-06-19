@@ -33,9 +33,18 @@ function OrderList() {
   const MAX_RETRIES = 10;
   const RETRY_DELAY_MS = 2000;
 
+  // Format date using LOCAL time parts to avoid UTC timezone shift (e.g. IST-5:30 → wrong day)
+  const toLocalDateString = (date) => {
+    if (!date) return '';
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  };
+
   const getItemsFromDataBase = async (pageNum, filterItem, filterDate, attempt = 0) => {
     const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
-    const formattedDate = filterDate ? filterDate.toISOString().split('T')[0] : '';
+    const formattedDate = toLocalDateString(filterDate);
 
     try {
       setLoading(true);
@@ -243,7 +252,7 @@ function OrderList() {
               customInput={
                 <button className="btn btn-primary ps-4 pe-4">
                   {selectedDate
-                    ? selectedDate.toISOString().split('T')[0]
+                    ? toLocalDateString(selectedDate)
                     : 'Select Date'}
                 </button>
               }
