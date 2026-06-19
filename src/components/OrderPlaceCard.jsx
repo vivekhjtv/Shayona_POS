@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { formatItemName } from '../utils/format';
 
 function OrderPlaceCard() {
   const [orderItems, setOrderItems] = useState([]);
@@ -7,25 +8,10 @@ function OrderPlaceCard() {
   const prevOrderItems = useRef([]);
   const notificationSound = useRef(new Audio('alert.mp3'));
 
-  const itemNameMapping = {
-    pav_bhaji: 'Pav Bhaji',
-    pesto: 'Pesto Pizza',
-    cheese_pizza: 'Cheese Pizza',
-    veg_pizza: 'Veg Pizza',
-    khichadi: 'Khichadi',
-    lot: 'Papdi Lot',
-    chat: 'Samosa Chat',
-    lemonade: 'Lemonade',
-    tea: "Tea",
-    coffee: "Coffee"
-  };
-
   const getItemsFromDataBase = async () => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     try {
-      // const response = await axios.get('http://localhost:8000/api/items');
-      const response = await axios.get(
-        'https://shayona-orders.vercel.app/api/items'
-      );
+      const response = await axios.get(`${BASE_URL}/api/items`);
       return response.data;
     } catch (error) {
       console.error('Error fetching order items:', error);
@@ -34,11 +20,9 @@ function OrderPlaceCard() {
   };
 
   const getStoreOrdersFromDataBase = async () => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     try {
-      // const response = await axios.get('http://localhost:8000/api/store-order');
-      const response = await axios.get(
-        'https://shayona-orders.vercel.app/api/store-order'
-      );
+      const response = await axios.get(`${BASE_URL}/api/store-order`);
       return response.data;
     } catch (error) {
       console.error('Error fetching store orders:', error);
@@ -108,6 +92,7 @@ console.log(items)
   }, [orderItems, isNotificationEnabled]);
 
   const handleDone = async (order) => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     try {
       console.log(order);
       // Determine if the order is a regular item or store order
@@ -117,8 +102,7 @@ console.log(items)
       if (isStoreOrder) {
         // Store order logic
         console.log(isStoreOrder);
-        // await axios.post('http://localhost:8000/api/store', {
-        await axios.post('https://shayona-orders.vercel.app/api/store', {
+        await axios.post(`${BASE_URL}/api/store`, {
           orders: order.items,
           customerName: order.customerName,
           date: order.date,
@@ -127,14 +111,10 @@ console.log(items)
 
         // Delete the store order from the store-order table
         const itemId = order._id;
-        // await axios.delete(`http://localhost:8000/api/store-order/${itemId}`);
-        await axios.delete(
-          `https://shayona-orders.vercel.app/api/store-order/${itemId}`
-        );
+        await axios.delete(`${BASE_URL}/api/store-order/${itemId}`);
       } else {
         // Regular item logic
-        // await axios.post('http://localhost:8000/api/orders', {
-        await axios.post('https://shayona-orders.vercel.app/api/orders', {
+        await axios.post(`${BASE_URL}/api/orders`, {
           orders: order.items,
           customerName: order.customerName,
           date: order.date,
@@ -143,10 +123,7 @@ console.log(items)
 
         // Delete the order from the items table
         const itemId = order._id;
-        // await axios.delete(`http://localhost:8000/api/items/${itemId}`);
-        await axios.delete(
-          `https://shayona-orders.vercel.app/api/items/${itemId}`
-        );
+        await axios.delete(`${BASE_URL}/api/items/${itemId}`);
       }
 
       fetchAllOrders();
@@ -156,17 +133,15 @@ console.log(items)
   };
 
   const cancelOrder = async (order) => {
+    const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
     try {
       const isStoreOrder =
         order.customerName === 'Mandir' || order.customerName === 'Store';
 
       const itemId = order._id;
-      // const deleteUrl = isStoreOrder
-      //   ? `http://localhost:8000/api/store-order/${itemId}`
-      //   : `http://localhost:8000/api/items/${itemId}`;
       const deleteUrl = isStoreOrder
-        ? `https://shayona-orders.vercel.app/api/store-order/${itemId}`
-        : `https://shayona-orders.vercel.app/api/items/${itemId}`;
+        ? `${BASE_URL}/api/store-order/${itemId}`
+        : `${BASE_URL}/api/items/${itemId}`;
 
       await axios.delete(deleteUrl);
       fetchAllOrders();
@@ -218,7 +193,7 @@ console.log(items)
                     <div key={item._id || item.name}>
                       <h5 className="card-text order_itemList">
                         
-                        {itemNameMapping[item.name] || item.name} -{' '}
+                        {formatItemName(item.name)} -{' '}
                         {item.quantity}
                       </h5>
                     </div>

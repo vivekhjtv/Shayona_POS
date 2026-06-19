@@ -20,19 +20,6 @@ function Header() {
             <Link type="button" to="/" className="btn me-2">
               POS
             </Link>
-            {/* <Link type="button" to="/stock" className="btn  me-2">
-              Stock
-            </Link> */}
-            
-            {/* <Link type="button" to="/mandir" className="btn me-2">
-              Mandir Order
-            </Link>
-            <Link type="button" to="/orderForm" className="btn  me-2">
-              Order Form
-            </Link>
-            <Link type="button" to="/orderCard" className="btn  me-2">
-              Catering Orders
-            </Link> */}
           </div>
         </div>
       </div>

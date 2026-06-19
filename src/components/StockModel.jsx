@@ -1,84 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function StockModel() {
-  const [quantity, setQuantity] = useState({
-    khichadi: '',
-    bhaji: '',
-    lot: '',
-    cheesePizza: '',
-    vegPizza: '',
-    thali: '',
-    pesto: '',
-    chat: '',
-    lemonade: "",
-    tea: "",
-    coffee: "",
+  const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState({});
 
-  });
+  const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
 
-  const items = [
-    {
-      name: 'khichadi',
-      label: 'Khichadi',
-      placeholder: 'Enter khichadi quantity',
-    },
-    {
-      name: 'bhaji',
-      label: 'Pav Bhaji',
-      placeholder: 'Enter Pav Bhaji quantity',
-    },
-    {
-      name: 'lot',
-      label: 'Papdi Lot',
-      placeholder: 'Enter papdi lot quantity',
-    },
-    {
-      name: 'cheesePizza',
-      label: 'Cheese Pizza',
-      placeholder: 'Enter Cheese Pizza quantity',
-    },
-    {
-      name: 'vegPizza',
-      label: 'Veg Pizza',
-      placeholder: 'Enter Veg Pizza quantity',
-    },
-    {
-      name: 'thali',
-      label: 'Special Thali',
-      placeholder: 'Enter Special Thali quantity',
-    },
-    {
-      name: 'pesto',
-      label: 'Pesto Pizza',
-      placeholder: 'Enter Pesto Pizza quantity',
-    },
-    {
-      name: 'chat',
-      label: 'Samosa Chat',
-      placeholder: 'Enter Samosa Chat quantity',
-    },
-    {
-      name: 'lemonade',
-      label: 'Lemonade',
-      placeholder: 'Enter Lemonade quantity',
-    },
-    {
-      name: 'tea',
-      label: 'Tea',
-      placeholder: 'Enter Tea quantity',
-    },
-    {
-      name: 'coffee',
-      label: 'Samosa Chat',
-      placeholder: 'Enter Coffee quantity',
-    },
-  ];
+  // Fetch configured items dynamically
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/products`);
+      setProducts(response.data);
+      
+      // Initialize quantity states
+      const initialQty = {};
+      response.data.forEach((p) => {
+        initialQty[p.key] = '';
+      });
+      setQuantity(initialQty);
+    } catch (error) {
+      console.error('Error fetching products for stock entry:', error);
+    }
+  };
 
-  const handleChange = (e, name) => {
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleChange = (e, key) => {
     setQuantity((prevState) => ({
       ...prevState,
-      [name]: e.target.value,
+      [key]: e.target.value,
     }));
   };
 
@@ -88,39 +41,30 @@ function StockModel() {
 
     const easternDate = currentDateTime.toLocaleDateString('en-CA', options);
     const easternTime = currentDateTime.toLocaleTimeString('en-US', options);
-    try {
-      // await axios.post('http://localhost:8000/api/stock', {
-      await axios.post('https://shayona-orders.vercel.app/api/stock', {
-        khichadi: quantity.khichadi,
-        pav_bhaji: quantity.bhaji,
-        lot: quantity.lot,
-        veg_pizza: quantity.vegPizza,
-        cheese_pizza: quantity.cheesePizza,
-        thali: quantity.thali,
-        pesto: quantity.pesto,
-        chat: quantity.chat,
-        lemonade: quantity.lemonade,
-        tea: quantity.tea,
-        coffee: quantity.coffee,
-        easternDate: easternDate,
-        easternTime: easternTime,
-      });
 
-      setQuantity({
-        khichadi: '',
-        bhaji: '',
-        lot: '',
-        cheesePizza: '',
-        vegPizza: '',
-        thali: '',
-        pesto: '',
-        chat: '',
-        lemonade: '',
-        tea: '',
-        coffee: '',
+    // Build payload dynamically from active products
+    const payload = {
+      easternDate: easternDate,
+      easternTime: easternTime,
+    };
+    products.forEach((p) => {
+      payload[p.key] = quantity[p.key] || '0';
+    });
+
+    try {
+      await axios.post(`${BASE_URL}/api/stock`, payload);
+
+      // Reset quantities
+      const resetQty = {};
+      products.forEach((p) => {
+        resetQty[p.key] = '';
       });
+      setQuantity(resetQty);
+
+      // Trigger a window reload to refresh the table if needed
+      window.location.reload();
     } catch (error) {
-      console.error('Error saving order:', error);
+      console.error('Error saving stock order:', error);
     }
   };
 
@@ -128,9 +72,10 @@ function StockModel() {
     <>
       <button
         type="button"
-        className="btn btn-primary mb-2 "
+        className="btn btn-primary mb-2"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
+        onClick={fetchProducts} // Re-fetch products when opening modal to reflect latest menu configuration
       >
         Add Stokes
       </button>
@@ -157,21 +102,21 @@ function StockModel() {
             </div>
             <div className="modal-body">
               <div className="row">
-                {items.map((item, index) => (
-                  <div className="col-sm-6 mb-3" key={index}>
+                {products.map((product) => (
+                  <div className="col-sm-6 mb-3" key={product._id}>
                     <label
-                      htmlFor={`input-${item.name}`}
+                      htmlFor={`input-${product.key}`}
                       className="form-label model_input"
                     >
-                      {item.label}
+                      {product.name}
                     </label>
                     <input
                       type="number"
                       className="form-control"
-                      id={`input-${item.name}`}
-                      placeholder={item.placeholder}
-                      value={quantity[item.name]}
-                      onChange={(e) => handleChange(e, item.name)}
+                      id={`input-${product.key}`}
+                      placeholder={`Enter ${product.name} quantity`}
+                      value={quantity[product.key] || ''}
+                      onChange={(e) => handleChange(e, product.key)}
                     />
                   </div>
                 ))}
@@ -189,6 +134,7 @@ function StockModel() {
                 type="button"
                 className="btn btn-primary"
                 onClick={addQuantity}
+                data-bs-dismiss="modal"
               >
                 Save changes
               </button>

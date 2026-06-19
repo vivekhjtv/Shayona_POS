@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePOSContext } from '../contexts/PosContext';
+import { formatItemName } from '../utils/format';
 
 function LeftSelectItem() {
   const {
@@ -86,7 +87,7 @@ function LeftSelectItem() {
               className="list-group-item d-flex justify-content-between align-items-center"
             >
               <div className="col-md-5">
-                <span className="item-name list_title">{item.name}</span>
+                <span className="item-name list_title">{formatItemName(item.name)}</span>
               </div>
               <div className="col-md-4 text-right ">
                 <button
