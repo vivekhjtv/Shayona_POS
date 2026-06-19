@@ -1,5 +1,4 @@
 import React from 'react';
-import StoreBulkOrder from './StoreBulkOrder';
 import { Link } from 'react-router-dom';
 
 function Header() {
