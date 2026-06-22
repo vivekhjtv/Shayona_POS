@@ -548,12 +548,47 @@ header a.nav-link.active {
   width: auto !important;
 }
 
-.react-datepicker__input-container button {
+.react-datepicker__input-container button:not(.react-datepicker__close-icon) {
   border-radius: 8px !important;
   font-weight: 600 !important;
   padding: 10px 18px !important;
   border: 1px solid var(--color-border) !important;
   transition: all var(--transition-fast) !important;
+}
+
+.react-datepicker__input-container button.datepicker-has-value:not(.react-datepicker__close-icon) {
+  padding-right: 42px !important;
+}
+
+.react-datepicker__close-icon {
+  height: 100% !important;
+  padding: 0 10px 0 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  right: 0 !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.react-datepicker__close-icon::after {
+  background-color: var(--color-dark-subtle, #1e293b) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  content: "×" !important;
+  transition: background-color var(--transition-fast) !important;
+}
+
+.react-datepicker__close-icon:hover::after {
+  background-color: var(--color-danger, #ef4444) !important;
 }
 
 /* Pagination custom theme colors */

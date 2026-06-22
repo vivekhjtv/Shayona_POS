@@ -7,6 +7,24 @@ const POSContextWrapper = ({ children }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [customerName, setCustomerName] = useState('');
   const [notification, setNotification] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem('admin_authenticated') === 'true'
+  );
+
+  const login = (username, password) => {
+    // Basic admin credential check
+    if (username.trim() === 'admin' && password === 'admin') {
+      setIsAuthenticated(true);
+      localStorage.setItem('admin_authenticated', 'true');
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('admin_authenticated');
+  };
 
   const addItemToLeftList = (itemName, price) => {
     const existingItem = selectedItems.find((item) => item.name === itemName);
@@ -86,6 +104,9 @@ const POSContextWrapper = ({ children }) => {
     customerName,
     setCustomerName,
     notification, // Add notification to context
+    isAuthenticated,
+    login,
+    logout,
   };
 
   return (
