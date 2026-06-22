@@ -7,6 +7,8 @@ function OrderPlaceCard() {
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(false);
   const prevOrderItems = useRef([]);
   const notificationSound = useRef(new Audio('alert.mp3'));
+  const isInitialLoad = useRef(true);
+  const hasFetched = useRef(false);
 
   const getItemsFromDataBase = async () => {
     const BASE_URL = process.env.REACT_APP_GLOBAL_URL;
@@ -56,6 +58,7 @@ console.log(items)
     }));
 
     setOrderItems([...items, ...formattedStoreOrders]);
+    hasFetched.current = true;
   };
   const enableNotifications = () => {
     fetchAllOrders();
@@ -79,15 +82,24 @@ console.log(items)
   }, []);
 
   useEffect(() => {
-    if (
-      prevOrderItems.current.length &&
-      JSON.stringify(prevOrderItems.current) !== JSON.stringify(orderItems)
-    ) {
-      if (isNotificationEnabled) {
-        notificationSound.current.play().catch((error) => {
-          console.error('Error playing notification sound:', error);
-        });
-      }
+    if (!hasFetched.current) {
+      return;
+    }
+
+    if (isInitialLoad.current) {
+      prevOrderItems.current = orderItems;
+      isInitialLoad.current = false;
+      return;
+    }
+
+    const hasNewOrder = orderItems.some(
+      (item) => !prevOrderItems.current.some((prevItem) => prevItem._id === item._id)
+    );
+
+    if (hasNewOrder && isNotificationEnabled) {
+      notificationSound.current.play().catch((error) => {
+        console.error('Error playing notification sound:', error);
+      });
     }
     prevOrderItems.current = orderItems;
   }, [orderItems, isNotificationEnabled]);

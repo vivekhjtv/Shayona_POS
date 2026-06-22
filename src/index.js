@@ -16,6 +16,8 @@ import OrderForm from "./components/OrderBook/OrderForm";
 import OrderFormCards from "./components/OrderBook/OrderFormCards";
 import StoreBulkOrder from "./components/StoreBulkOrder";
 import ManageItems from "./components/ManageItems";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/Login";
 
 const router = createBrowserRouter([
   {
@@ -27,36 +29,45 @@ const router = createBrowserRouter([
         Component: ShopContainer,
       },
       {
+        path: "login",
+        Component: Login,
+      },
+      {
         path: "orders",
         Component: OrderPlaceCard,
       },
       {
-        path: "orderList",
-        Component: OrderList,
-      },
-      {
-        path: "stock",
-        Component: StockInfoTable,
-      },
-      {
-        path: "mandir",
-        Component: MandirOrder,
-      },
-      {
-        path: "orderForm",
-        Component: OrderForm,
-      },
-      {
-        path: "orderCard",
-        Component: OrderFormCards,
-      },
-      {
-        path: "store",
-        Component: StoreBulkOrder,
-      },
-      {
-        path: "manage-items",
-        Component: ManageItems,
+        Component: ProtectedRoute,
+        children: [
+          {
+            path: "orderList",
+            Component: OrderList,
+          },
+          {
+            path: "stock",
+            Component: StockInfoTable,
+          },
+          {
+            path: "mandir",
+            Component: MandirOrder,
+          },
+          {
+            path: "orderForm",
+            Component: OrderForm,
+          },
+          {
+            path: "orderCard",
+            Component: OrderFormCards,
+          },
+          {
+            path: "store",
+            Component: StoreBulkOrder,
+          },
+          {
+            path: "manage-items",
+            Component: ManageItems,
+          },
+        ],
       },
     ],
   },
