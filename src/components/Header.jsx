@@ -1,28 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 function Header() {
   return (
-    <header className="headerStyle">
-      <div className="container">
-        <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a
-            href="/"
-            className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-          >
-            <img src="Shayona_icon.png" height="70" alt="Logo" />
-          </a>
-
-          <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></ul>
-
-          <div className="">
-            <Link type="button" to="/" className="btn me-2">
+    <Navbar expand="xl" className="headerStyle navbar-dark">
+      <Container fluid>
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center py-0 logo">
+          <img
+            src="Shayona_icon.png"
+            height="55"
+            alt="Shayona Logo"
+            className="d-inline-block align-top"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 shadow-none" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto align-items-center mt-2 mt-xl-0">
+            <Nav.Link as={NavLink} to="/" end className="nav-link">
               POS
-            </Link>
-          </div>
-        </div>
-      </div>
-    </header>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
