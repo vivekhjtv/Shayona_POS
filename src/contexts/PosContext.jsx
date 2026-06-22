@@ -13,7 +13,9 @@ const POSContextWrapper = ({ children }) => {
 
   const login = (username, password) => {
     // Basic admin credential check
-    if (username.trim() === 'admin' && password === 'admin') {
+    const correctUsername = process.env.REACT_APP_ADMIN_USERNAME;
+    const correctPassword = process.env.REACT_APP_ADMIN_PASS;
+    if (username.trim() === correctUsername && password === correctPassword) {
       setIsAuthenticated(true);
       localStorage.setItem('admin_authenticated', 'true');
       return true;
@@ -43,7 +45,7 @@ const POSContextWrapper = ({ children }) => {
 
   const handlePlaceOrder = async (name) => {
     const customerField = document.getElementsByClassName('customer_name')[0];
-    
+
     if (selectedItems.length === 0) {
       alert('Please Select Items');
       return;
@@ -84,10 +86,10 @@ const POSContextWrapper = ({ children }) => {
     await postSelectedItemsToDataBase(selectedItems);
     setSelectedItems([]);
     setCustomerName('');
-    
+
     // Show notification message
     setNotification('Thank you for your order. Your order is in preparation.');
-    
+
     // Hide notification message after 3 seconds
     setTimeout(() => {
       setNotification('');
