@@ -42,47 +42,109 @@ function StockInfoTable() {
     }
   };
 
+  const currentStock = stockData.length > 0 ? stockData[0] : {};
+
   return (
-    <div className="container vh-100">
-      <h1 className="text-center mt-4 mb-3 order_title">Stock Information</h1>
-      <div className="d-flex justify-content-end">
+    <div className="container py-4" style={{ minHeight: '100vh' }}>
+      <div className="d-flex flex-wrap align-items-center justify-content-between mb-4">
+        <h1 className="order_title mb-2 mb-md-0">Stock Inventory</h1>
         <StockModel />
       </div>
+
+      {/* Current Stock Level Dashboard Grid */}
+      <h3 className="summary_title mb-3">Current Stock Levels</h3>
+      {products.length === 0 ? (
+        <p className="text-muted">No products configured yet.</p>
+      ) : (
+        <div className="stock-grid mb-5">
+          {products.map((product) => {
+            const count = currentStock[product.key];
+            const isStockTracked = count !== undefined && count !== null && count !== "";
+            const countNum = isStockTracked ? Number(count) : null;
+            
+            let cardClass = "stock-card";
+            let statusText = "Service Item";
+            
+            if (isStockTracked) {
+              if (countNum <= 0) {
+                cardClass += " out-of-stock-card";
+                statusText = "Out of Stock";
+              } else if (countNum <= 5) {
+                cardClass += " low-stock-card";
+                statusText = "Low Stock";
+              } else {
+                cardClass += " in-stock-card";
+                statusText = "In Stock";
+              }
+            }
+
+            return (
+              <div className={cardClass} key={product._id}>
+                <div className="item-label">{product.name}</div>
+                <div className="stock-value">{isStockTracked ? countNum : "—"}</div>
+                <div className="text-muted small mt-2" style={{ fontSize: '11px', fontWeight: '600' }}>
+                  {statusText}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Stock Entry Log History */}
+      <h3 className="summary_title mb-3">Stock Entry Logs</h3>
       <div className="table-responsive">
-        <table className="table table-striped">
-          <thead className="table-dark">
+        <table className="table table-hover table-striped">
+          <thead>
             <tr>
-              <th>Item</th>
-              <th>Quantity</th>
-              <th>Eastern Date</th>
-              <th>Eastern Time</th>
-              <th>Actions</th>
+              <th style={{ width: '25%' }}>Logged Date</th>
+              <th style={{ width: '20%' }}>Logged Time</th>
+              <th style={{ width: '40%' }}>Stock Updates (Qty)</th>
+              <th style={{ width: '15%' }} className="text-end">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {stockData.map((item) => (
-              <tr key={item._id}>
-                <td>
-                  {products.map((p) => (
-                    <div key={p.key}>{p.name}</div>
-                  ))}
-                </td>
-                <td>
-                  {products.map((p) => (
-                    <div key={p.key}>
-                      {item[p.key] !== undefined ? item[p.key] : '-'}
-                    </div>
-                  ))}
-                </td>
-                <td>{item.easternDate}</td>
-                <td>{item.easternTime}</td>
-                <td>
-                  <button onClick={() => handleDeleteClick(item._id)}>
-                    Delete
-                  </button>
+            {stockData.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="text-center py-4 text-muted">
+                  No stock entries logged.
                 </td>
               </tr>
-            ))}
+            ) : (
+              stockData.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.easternDate}</td>
+                  <td>{item.easternTime}</td>
+                  <td>
+                    <div className="d-flex flex-wrap gap-2">
+                      {products.map((p) => {
+                        const val = item[p.key];
+                        const hasVal = val !== undefined && val !== null && val !== "";
+                        if (hasVal && Number(val) > 0) {
+                          return (
+                            <span className="badge bg-secondary px-2 py-1" key={p.key} style={{ fontSize: '12px' }}>
+                              {p.name}: <strong>{val}</strong>
+                            </span>
+                          );
+                        }
+                        return null;
+                      })}
+                    </div>
+                  </td>
+                  <td className="text-end">
+                    <button 
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => {
+                        if (window.confirm("Are you sure you want to delete this stock entry log?")) {
+                          handleDeleteClick(item._id);
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              )))}
           </tbody>
         </table>
       </div>

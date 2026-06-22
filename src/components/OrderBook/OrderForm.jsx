@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { Form, Container, Row, Col, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
 const OrderForm = () => {
@@ -15,9 +15,12 @@ const OrderForm = () => {
   const [amountRest, setAmountRest] = useState('');
   const [formError, setFormError] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const [successMsg, setSuccessMsg] = useState(false);
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setSuccessMsg(false);
+    
     // Simple validation
     if (
       !orderDate ||
@@ -78,6 +81,8 @@ const OrderForm = () => {
       setAmountPaid('');
       setAmountRest('');
       setFormError('');
+      setSuccessMsg(true);
+      setTimeout(() => setSuccessMsg(false), 4000);
     } catch (error) {
       console.error('Error saving order:', error);
       setFormError('Error saving order. Please try again.');
@@ -85,126 +90,170 @@ const OrderForm = () => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center mt-4">
-        <Col md={8}>
-          <h1 className="text-center">Order Details</h1>
-          {formError && <Alert variant="danger">{formError}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="orderDate">
-                  <Form.Label>Order Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    value={orderDate}
-                    onChange={(e) => setOrderDate(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="orderTime">
-                  <Form.Label>Order Time</Form.Label>
-                  <Form.Control
-                    type="time"
-                    value={orderTime}
-                    onChange={(e) => setOrderTime(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+    <Container className="py-5">
+      <Row className="justify-content-md-center">
+        <Col lg={9} xl={8}>
+          <div className="card-form-wrapper shadow-sm border p-4 p-md-5">
+            <div className="d-flex align-items-center gap-3 mb-4">
+              <div style={{ fontSize: '36px' }}>📝</div>
+              <div>
+                <h2 className="order_title mb-1">Book New Order</h2>
+                <p className="text-muted mb-0">Fill in the details to book a custom future delivery order.</p>
+              </div>
+            </div>
 
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mt-2" controlId="customerName">
-                  <Form.Label>Customer Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter customer name"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mt-2" controlId="customerNumber">
-                  <Form.Label>Customer Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter customer number"
-                    value={customerNumber}
-                    onChange={(e) => setCustomerNumber(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Form.Group className="mt-2" controlId="orderDetails">
-              <Form.Label>Order Details</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Enter order details..."
-                value={orderDetails}
-                onChange={(e) => setOrderDetails(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2" controlId="orderNote">
-              <Form.Label>Order Note</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Add additional notes regarding order?"
-                value={orderNote}
-                onChange={(e) => setOrderNote(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2" controlId="orderTaker">
-              <Form.Label>Order By</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter name of the person who took the order"
-                value={orderTaker}
-                onChange={(e) => setOrderTaker(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mt-2" controlId="paymentStatus">
-              <Form.Label>Payment Status</Form.Label>
-              <Form.Control
-                as="select"
-                value={paymentStatus}
-                onChange={(e) => setPaymentStatus(e.target.value)}
-              >
-                <option value="">Select payment status</option>
-                <option value="done">Payment Done</option>
-                <option value="half">Half Done</option>
-                <option value="pending">Pending</option>
-              </Form.Control>
-            </Form.Group>
-            {paymentStatus === 'half' && (
-              <>
-                <Form.Group className="mt-2" controlId="amountPaid">
-                  <Form.Label>Amount Paid</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter amount paid"
-                    value={amountPaid}
-                    onChange={(e) => setAmountPaid(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group className="mt-2" controlId="amountRest">
-                  <Form.Label>Amount Rest</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter amount rest"
-                    value={amountRest}
-                    onChange={(e) => setAmountRest(e.target.value)}
-                  />
-                </Form.Group>
-              </>
+            {formError && <Alert variant="danger" className="mb-4">{formError}</Alert>}
+            {successMsg && (
+              <Alert variant="success" className="mb-4">
+                <strong>Success!</strong> The custom order details have been successfully saved to the Order Book!
+              </Alert>
             )}
-            <Button variant="primary" type="submit" className="w-100 mt-3">
-              Save Order Details
-            </Button>
-          </Form>
+
+            <Form onSubmit={handleFormSubmit}>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group controlId="orderDate">
+                    <Form.Label>Delivery Date</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={orderDate}
+                      onChange={(e) => setOrderDate(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="orderTime">
+                    <Form.Label>Delivery Time</Form.Label>
+                    <Form.Control
+                      type="time"
+                      value={orderTime}
+                      onChange={(e) => setOrderTime(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group controlId="customerName">
+                    <Form.Label>Customer Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="e.g. Ramesh Patel"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="customerNumber">
+                    <Form.Label>Customer Phone Number</Form.Label>
+                    <Form.Control
+                      type="tel"
+                      placeholder="e.g. 647-123-4567"
+                      value={customerNumber}
+                      onChange={(e) => setCustomerNumber(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Form.Group className="mb-3" controlId="orderDetails">
+                <Form.Label>Order Description & Items</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Describe the items ordered, quantities, or specific details..."
+                  value={orderDetails}
+                  onChange={(e) => setOrderDetails(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="orderNote">
+                <Form.Label>Preparation Notes (Optional)</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="e.g. Extra spicy, pack sauces separately"
+                  value={orderNote}
+                  onChange={(e) => setOrderNote(e.target.value)}
+                />
+              </Form.Group>
+
+              <Row className="mb-4">
+                <Col md={6}>
+                  <Form.Group controlId="orderTaker">
+                    <Form.Label>Order Taken By</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Staff member name"
+                      value={orderTaker}
+                      onChange={(e) => setOrderTaker(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="paymentStatus">
+                    <Form.Label>Payment Status</Form.Label>
+                    <Form.Select
+                      value={paymentStatus}
+                      onChange={(e) => setPaymentStatus(e.target.value)}
+                      required
+                    >
+                      <option value="">Select status</option>
+                      <option value="done">Fully Paid</option>
+                      <option value="half">Half Paid / Deposit</option>
+                      <option value="pending">Unpaid / Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              {paymentStatus === 'half' && (
+                <div className="p-3 mb-4 bg-light border rounded" style={{ animation: 'fadeIn 0.2s ease' }}>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group controlId="amountPaid">
+                        <Form.Label>Deposit Amount ($)</Form.Label>
+                        <Form.Control
+                          type="number"
+                          placeholder="Amount paid"
+                          value={amountPaid}
+                          onChange={(e) => setAmountPaid(e.target.value)}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group controlId="amountRest">
+                        <Form.Label>Remaining Balance ($)</Form.Label>
+                        <Form.Control
+                          type="number"
+                          placeholder="Amount due"
+                          value={amountRest}
+                          onChange={(e) => setAmountRest(e.target.value)}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                </div>
+              )}
+
+              <button 
+                type="submit" 
+                className="place-order-btn w-100"
+                style={{ fontWeight: '600', padding: '14px', borderRadius: '10px' }}
+              >
+                Save Order Details
+              </button>
+            </Form>
+          </div>
         </Col>
       </Row>
     </Container>

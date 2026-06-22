@@ -83,9 +83,21 @@ function RightItemsList() {
         {products.map((product) => {
           const count = itemCount[product.key];
           const isStockTracked = count !== undefined && count !== null && count !== "";
-          
+
+          let stockBadge = null;
+          if (isStockTracked) {
+            const countNum = Number(count);
+            if (countNum <= 0) {
+              stockBadge = <span className="stock-badge out-of-stock">Out of Stock</span>;
+            } else if (countNum <= 5) {
+              stockBadge = <span className="stock-badge low-stock">{countNum} Left</span>;
+            } else {
+              stockBadge = <span className="stock-badge in-stock">{countNum} Available</span>;
+            }
+          }
+
           return (
-            <div className="col-md-3 mb-4" key={product._id}>
+            <div className="col-lg-4 col-xl-3 col-md-6 mb-4" key={product._id}>
               <div
                 className="card card_item h-100"
                 onClick={() =>
@@ -93,6 +105,7 @@ function RightItemsList() {
                 }
                 style={{ cursor: 'pointer' }}
               >
+                {stockBadge}
                 <img
                   src={product.imageUrl || product.image || "default_item.jpeg"}
                   className="card-img-top"
@@ -100,11 +113,10 @@ function RightItemsList() {
                   onError={(e) => {
                     e.target.src = "default_item.jpeg";
                   }}
-                  style={{ height: '110px', objectFit: 'cover' }}
                 />
                 <div className="card-body d-flex align-items-center justify-content-center text-center">
                   <h5 className="card-title item_title">
-                    {product.name} {isStockTracked ? `(${count})` : ""}
+                    {product.name}
                   </h5>
                 </div>
               </div>

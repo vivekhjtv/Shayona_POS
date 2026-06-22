@@ -158,79 +158,84 @@ console.log(items)
       case 'Store':
         return 'card card_order bg-store';
       default:
-        return 'card card_order bg-light';
+        return 'card card_order bg-light-ticket';
     }
   };
+
   return (
-    <div className="container-fluid vh-100">
-      <h1 className="text-center mt-4 mb-5 order_title">Orders</h1>
-      {!isNotificationEnabled && (
-        <div className="text-center mb-4">
-          <button className="btn btn-primary" onClick={enableNotifications}>
-            Enable Notifications
-          </button>
+    <div className="container-fluid py-4" style={{ minHeight: '100vh' }}>
+      <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 px-3">
+        <h1 className="order_title mb-0">Kitchen Orders Board</h1>
+        <div>
+          {!isNotificationEnabled ? (
+            <button className="btn btn-primary px-4 py-2" onClick={enableNotifications}>
+              🔔 Enable Order Alerts
+            </button>
+          ) : (
+            <span className="badge bg-success px-3 py-2" style={{ fontSize: '13px' }}>
+              🔔 Alerts Enabled
+            </span>
+          )}
         </div>
-      )}
-      <div className="row row-cols-1 row-cols-md-5 ps-2 pe-2">
-        {orderItems.map((order, index) => (
-          <div className="col orders_card mb-4" key={order._id}>
-            <div className={getOrderCardClass(order.customerName)}>
-              <div className="card-header order_header d-flex justify-content-between align-items-center">
-                <div className="">
-                  <div className="order_number">{`Order #0${index + 1}`}</div>
-                  <div key={order._id}>
+      </div>
+
+      {orderItems.length === 0 ? (
+        <div className="text-center py-5">
+          <div style={{ fontSize: '48px', marginBottom: '16px' }}>📋</div>
+          <h3 className="text-muted">No pending orders in the kitchen.</h3>
+          <p className="text-muted">New orders will pop up here in real-time.</p>
+        </div>
+      ) : (
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 px-3">
+          {orderItems.map((order, index) => (
+            <div className="col" key={order._id}>
+              <div className={getOrderCardClass(order.customerName)}>
+                <div className="card-header order_header d-flex justify-content-between align-items-start">
+                  <div>
+                    <div className="order_number">{`Ticket #0${index + 1}`}</div>
                     <div className="order_datetime">
                       {order.time.replace(/:\d{2}(?=\s)/, '')}
                     </div>
                   </div>
-                </div>
-                <div key={order._id}>
                   <span className="customer_name">{order.customerName}</span>
                 </div>
-              </div>
-              <div className="card-body">
-                <div className="item_container">
-                  {order.items.map((item, itemIndex) => (
-                    <div key={item._id || item.name}>
-                      <h5 className="card-text order_itemList">
-                        
-                        {formatItemName(item.name)} -{' '}
-                        {item.quantity}
-                      </h5>
-                    </div>
-                  ))}
-                </div>
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
+                <div className="card-body">
+                  <div className="item_container">
+                    {order.items.map((item, itemIndex) => (
+                      <div key={item._id || item.name} className="order_itemList d-flex justify-content-between">
+                        <span>{formatItemName(item.name)}</span>
+                        <strong className="text-primary">x{item.quantity}</strong>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="d-flex justify-content-end align-items-center pt-2" style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
                     <button
                       type="button"
-                      className="btn btn-success btn-done"
+                      className="btn-done"
                       onClick={() => handleDone(order)}
-                      style={{ padding: '0.25em 0.5em' }} // Adjust padding if necessary
+                      title="Mark Complete"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="12" // Set size to 12
-                        height="12" // Set size to 12
+                        width="16"
+                        height="16"
                         fill="currentColor"
-                        className="bi bi-check-circle-fill"
                         viewBox="0 0 16 16"
                       >
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-5.446z" />
                       </svg>
                     </button>
                     <button
                       type="button"
-                      className="btn btn-danger btn-cancel"
+                      className="btn-cancel"
                       onClick={() => cancelOrder(order)}
-                      style={{ padding: '0.25em 0.5em' }} // Adjust padding if necessary
+                      title="Cancel / Delete"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="12" // Set size to 12
-                        height="12" // Set size to 12
+                        width="14"
+                        height="14"
                         fill="currentColor"
-                        className="bi bi-trash3-fill"
                         viewBox="0 0 16 16"
                       >
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
@@ -240,9 +245,9 @@ console.log(items)
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -3,17 +3,13 @@ import MandirBulkOrder from './MandirBulkOrder';
 
 function MandirOrder() {
   return (
-    <>
+    <div className="container py-5">
       <div className="row justify-content-center">
-        <div className="col-md-6 text-center mt-5">
-          <h1>Place order for Mandir</h1>
+        <div className="col-lg-8 col-xl-7">
+          <MandirBulkOrder />
         </div>
       </div>
-
-      <div className="d-flex justify-content-center mt-3">
-        <MandirBulkOrder />
-      </div>
-    </>
+    </div>
   );
 }
 

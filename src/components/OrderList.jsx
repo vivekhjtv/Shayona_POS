@@ -204,77 +204,90 @@ function OrderList() {
   };
 
   return (
-    <div className="container vh-100">
-      <h1 className="text-center mt-4 mb-3 order_title">Orders List</h1>
-
-      {loading && (
-        <div className="d-flex flex-column align-items-center justify-content-center mt-5">
-          <div className="spinner-border text-dark mb-3" role="status" style={{ width: '3rem', height: '3rem' }}>
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p className="text-muted">
-            {retryCount === 0
-              ? 'Loading orders...'
-              : `Server is waking up... (attempt ${retryCount}/${MAX_RETRIES})`}
-          </p>
-        </div>
-      )}
-
-      {!loading && (
-        <>
-          <div className="dropdown d-flex mb-4 justify-content-end align-items-center">
-            <button
-              className="btn btn-dark dropdown-toggle me-3"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Sort by {selectedFilter} ({selectedFilter === 'All' ? totalOrders : totalQuantity})
-            </button>
-            <ul className="dropdown-menu">
-              {items.map((itemName, index) => (
-                <li key={index}>
-                  <button
-                    className="dropdown-item"
-                    type="button"
-                    onClick={() => handleItemClick(itemName)}
-                  >
-                    {itemName}
-                  </button>
-                </li>
-              ))}
-            </ul>
+    <div className="container py-4">
+      <div className="d-flex flex-wrap align-items-center justify-content-between mb-4">
+        <h1 className="order_title mb-2 mb-md-0">Order History</h1>
+        
+        {!loading && (
+          <div className="d-flex align-items-center gap-2">
+            <div className="dropdown">
+              <button
+                className="btn btn-outline-dark dropdown-toggle px-3 py-2"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{ borderRadius: '8px', fontWeight: '500' }}
+              >
+                Filter: {selectedFilter} ({selectedFilter === 'All' ? totalOrders : totalQuantity})
+              </button>
+              <ul className="dropdown-menu shadow-sm">
+                {items.map((itemName, index) => (
+                  <li key={index}>
+                    <button
+                      className="dropdown-item py-2"
+                      type="button"
+                      onClick={() => handleItemClick(itemName)}
+                    >
+                      {itemName}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
             <DatePicker
               selected={selectedDate}
               onChange={handleDateChange}
               dateFormat="yyyy-MM-dd"
               isClearable
               customInput={
-                <button className="btn btn-primary ps-4 pe-4">
-                  {selectedDate
-                    ? toLocalDateString(selectedDate)
-                    : 'Select Date'}
+                <button 
+                  className="btn btn-outline-dark px-3 py-2 d-flex align-items-center gap-2"
+                  style={{ borderRadius: '8px', fontWeight: '500' }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar3" viewBox="0 0 16 16">
+                    <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                    <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg>
+                  {selectedDate ? toLocalDateString(selectedDate) : 'Select Date'}
                 </button>
               }
             />
           </div>
+        )}
+      </div>
 
+      {loading && (
+        <div className="d-flex flex-column align-items-center justify-content-center py-5">
+          <div className="spinner-border text-primary mb-3" role="status" style={{ width: '3rem', height: '3rem' }}>
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="text-muted">
+            {retryCount === 0
+              ? 'Loading orders...'
+              : `Connecting to database... (attempt ${retryCount}/${MAX_RETRIES})`}
+          </p>
+        </div>
+      )}
+
+      {!loading && (
+        <>
           <div className="table-responsive">
-            <table className="table table-striped">
-              <thead className="table-dark">
+            <table className="table table-hover table-striped">
+              <thead>
                 <tr>
-                  <th>Order Number</th>
-                  <th>Customer Name</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Items</th>
+                  <th style={{ width: '18%' }}>Order ID</th>
+                  <th style={{ width: '22%' }}>Customer Name</th>
+                  <th style={{ width: '15%' }}>Date</th>
+                  <th style={{ width: '15%' }}>Time</th>
+                  <th style={{ width: '30%' }}>Items Ordered</th>
                 </tr>
               </thead>
               <tbody>
                 {orderItems.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center">
-                      No items found
+                    <td colSpan="5" className="text-center py-5 text-muted">
+                      No matching order logs found.
                     </td>
                   </tr>
                 ) : (
@@ -283,15 +296,20 @@ function OrderList() {
                     const paddedNum = String(orderNum).padStart(3, '0');
                     return (
                       <tr key={order._id}>
-                        <td className="col-sm-2">{`OrderNumber #${paddedNum}`}</td>
-                        <td className="col-sm-2">{order.customerName}</td>
-                        <td className="col-sm-2">{order.date}</td>
-                        <td className="col-sm-2">{order.time}</td>
-                        <td className="col-sm-2">
+                        <td>
+                          <span className="badge bg-dark rounded-pill px-3 py-2">
+                            #{paddedNum}
+                          </span>
+                        </td>
+                        <td><strong>{order.customerName}</strong></td>
+                        <td>{order.date}</td>
+                        <td>{order.time}</td>
+                        <td>
                           <ul className="orderListItem">
                             {order.orders.map((item) => (
-                              <li key={item._id}>
-                                {`${formatItemName(item.name)} - ${item.quantity}`}
+                              <li key={item._id || item.name} className="py-1">
+                                <span className="text-primary">•</span> {formatItemName(item.name)}{' '}
+                                <span className="text-muted">({item.quantity})</span>
                               </li>
                             ))}
                           </ul>
