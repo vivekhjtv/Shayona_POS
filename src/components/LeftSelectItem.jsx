@@ -69,15 +69,17 @@ function LeftSelectItem() {
 
       <div className="selected_item_list">
         <ul className="selected-items-placeholder list-group">
-          <li className="list-group-item list-header d-flex justify-content-between align-items-center">
-            <div className="col-6">
-              <span>Item Details</span>
-            </div>
-            <div className="col-3 text-center">
-              <span>Quantity</span>
-            </div>
-            <div className="col-3 text-end">
-              <span>Price</span>
+          <li className="list-group-item list-header">
+            <div className="row align-items-center w-100 m-0">
+              <div className="col-6 px-0">
+                <span>Item Details</span>
+              </div>
+              <div className="col-3 px-0 text-center">
+                <span>Quantity</span>
+              </div>
+              <div className="col-3 px-0 text-end">
+                <span>Price</span>
+              </div>
             </div>
           </li>
           {selectedItems.length === 0 ? (
@@ -88,32 +90,34 @@ function LeftSelectItem() {
             selectedItems.map((item, index) => (
               <li
                 key={index}
-                className="list-group-item d-flex justify-content-between align-items-center"
+                className="list-group-item"
               >
-                <div className="col-6">
-                  <span className="item-name">{formatItemName(item.name)}</span>
-                </div>
-                <div className="col-3">
-                  <div className="quantity-controls">
-                    <button
-                      className="btn qty-btn"
-                      onClick={() => decrementQuantity(item.name)}
-                      type="button"
-                    >
-                      -
-                    </button>
-                    <span className="qty-number">{item.quantity}</span>
-                    <button
-                      className="btn qty-btn"
-                      onClick={() => incrementQuantity(item.name)}
-                      type="button"
-                    >
-                      +
-                    </button>
+                <div className="row align-items-center w-100 m-0">
+                  <div className="col-6 px-0">
+                    <span className="item-name">{formatItemName(item.name)}</span>
                   </div>
-                </div>
-                <div className="col-3 text-end">
-                  <span className="price-display">${(item.price * item.quantity).toFixed(2)}</span>
+                  <div className="col-3 px-0 d-flex justify-content-center">
+                    <div className="quantity-controls">
+                      <button
+                        className="btn qty-btn"
+                        onClick={() => decrementQuantity(item.name)}
+                        type="button"
+                      >
+                        -
+                      </button>
+                      <span className="qty-number">{item.quantity}</span>
+                      <button
+                        className="btn qty-btn"
+                        onClick={() => incrementQuantity(item.name)}
+                        type="button"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-3 px-0 text-end">
+                    <span className="price-display">${(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
                 </div>
               </li>
             ))

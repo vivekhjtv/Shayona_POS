@@ -12,7 +12,43 @@ function ManageItems() {
   const [name, setName] = useState('');
   const [key, setKey] = useState('');
   const [price, setPrice] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const [saving, setSaving] = useState(false);
+
+  // Drag and Drop states
+  const [draggedIndex, setDraggedIndex] = useState(null);
+
+  const handleRowDragStart = (e, index) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleRowDragOver = (e, index) => {
+    e.preventDefault();
+  };
+
+  const handleRowDrop = async (e, index) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+
+    const reordered = [...products];
+    const [draggedItem] = reordered.splice(draggedIndex, 1);
+    reordered.splice(index, 0, draggedItem);
+
+    // Update local state with indices as sortOrder for instant feedback
+    const updated = reordered.map((p, idx) => ({ ...p, sortOrder: idx }));
+    setProducts(updated);
+    setDraggedIndex(null);
+
+    try {
+      const orderedIds = updated.map((p) => p._id);
+      await axios.put(`${BASE_URL}/api/products/reorder`, { orderedIds });
+      setSuccess('Menu order updated successfully!');
+    } catch (err) {
+      console.error('Error saving reorder:', err);
+      setError('Failed to save menu order.');
+    }
+  };
 
   // Image upload states
   const [imageFile, setImageFile] = useState(null);
@@ -115,6 +151,7 @@ function ManageItems() {
     setName('');
     setKey('');
     setPrice('');
+    setSortOrder('');
     setImageFile(null);
     setImagePreview('');
     setUploadedImageUrl('');
@@ -128,6 +165,7 @@ function ManageItems() {
     setName(product.name);
     setKey(product.key);
     setPrice(product.price);
+    setSortOrder(product.sortOrder !== undefined ? product.sortOrder : '');
     setImagePreview(product.imageUrl || '');
     setUploadedImageUrl(product.imageUrl || '');
     setImageFile(null);
@@ -166,6 +204,7 @@ function ManageItems() {
         key: key.trim(),
         price: Number(price),
         imageUrl: finalImageUrl || '',
+        sortOrder: sortOrder !== '' ? Number(sortOrder) : undefined,
       };
 
       if (editingId) {
@@ -228,20 +267,42 @@ function ManageItems() {
             ) : products.length === 0 ? (
               <p className="text-muted text-center my-4">No items configured yet. Add one →</p>
             ) : (
-              <div className="table-responsive">
-                <table className="table table-hover align-middle">
+              <div>
+                <table className="table table-hover align-middle" style={{ tableLayout: 'fixed', width: '100%' }}>
+                  <colgroup>
+                    <col style={{ width: '36px' }} />
+                    <col style={{ width: '64px' }} />
+                    <col style={{ width: '22%' }} />
+                    <col style={{ width: '26%' }} />
+                    <col style={{ width: '10%' }} />
+                    <col style={{ width: '8%' }} />
+                    <col style={{ width: '16%' }} />
+                  </colgroup>
                   <thead className="table-light">
                     <tr>
-                      <th style={{ width: 60 }}>Image</th>
+                      <th></th>
+                      <th>Image</th>
                       <th>Name</th>
                       <th>Key</th>
                       <th>Price</th>
+                      <th>Order</th>
                       <th className="text-end">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product) => (
-                      <tr key={product._id}>
+                    {products.map((product, idx) => (
+                      <tr 
+                        key={product._id}
+                        draggable
+                        onDragStart={(e) => handleRowDragStart(e, idx)}
+                        onDragOver={(e) => handleRowDragOver(e, idx)}
+                        onDrop={(e) => handleRowDrop(e, idx)}
+                        className={draggedIndex === idx ? 'opacity-50 border-dashed border-primary' : ''}
+                        style={{ cursor: 'grab' }}
+                      >
+                        <td className="text-center text-muted" style={{ cursor: 'grab' }}>
+                          <span style={{ fontSize: '18px', userSelect: 'none' }}>☰</span>
+                        </td>
                         <td>
                           <img
                             src={product.imageUrl || product.image || 'default_item.jpeg'}
@@ -250,16 +311,19 @@ function ManageItems() {
                             onError={(e) => { e.target.src = 'default_item.jpeg'; }}
                           />
                         </td>
-                        <td><strong>{product.name}</strong></td>
-                        <td><code className="text-muted">{product.key}</code></td>
+                        <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}><strong>{product.name}</strong></td>
+                        <td style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}><code className="text-muted">{product.key}</code></td>
                         <td>${Number(product.price).toFixed(2)}</td>
-                        <td className="text-end">
-                          <button className="btn btn-sm btn-outline-primary me-2" onClick={() => handleEdit(product)}>
-                            Edit
-                          </button>
-                          <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(product._id)}>
-                            Delete
-                          </button>
+                        <td>{product.sortOrder}</td>
+                        <td>
+                          <div className="d-flex gap-2 justify-content-end">
+                            <button className="btn btn-sm btn-outline-primary" onClick={() => handleEdit(product)}>
+                              Edit
+                            </button>
+                            <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(product._id)}>
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -379,6 +443,18 @@ function ManageItems() {
                   onChange={(e) => setPrice(e.target.value)}
                   required
                 />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label text-dark">Sort Order</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="e.g. 0, 1, 2"
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                />
+                <div className="form-text" style={{ fontSize: 11 }}>Optional. Smaller numbers appear first. You can also drag and drop items in the table to reorder.</div>
               </div>
 
               <div className="d-grid gap-2">

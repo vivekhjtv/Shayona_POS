@@ -76,11 +76,28 @@ function RightItemsList() {
     );
   }
 
+  const sortedProducts = [...products].sort((a, b) => {
+    const countA = itemCount[a.key];
+    const isTrackedA = countA !== undefined && countA !== null && countA !== "";
+    const isAvailableA = !isTrackedA || Number(countA) > 0;
+
+    const countB = itemCount[b.key];
+    const isTrackedB = countB !== undefined && countB !== null && countB !== "";
+    const isAvailableB = !isTrackedB || Number(countB) > 0;
+
+    if (isAvailableA && !isAvailableB) return -1;
+    if (!isAvailableA && isAvailableB) return 1;
+
+    const orderA = a.sortOrder !== undefined ? a.sortOrder : 0;
+    const orderB = b.sortOrder !== undefined ? b.sortOrder : 0;
+    return orderA - orderB;
+  });
+
   return (
     <div className="item-selection">
       <h2 className="items_title">Available Items</h2>
       <div className="row">
-        {products.map((product) => {
+        {sortedProducts.map((product) => {
           const count = itemCount[product.key];
           const isStockTracked = count !== undefined && count !== null && count !== "";
 
